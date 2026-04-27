@@ -1,6 +1,5 @@
 # docker-compose.yml
 # Version 3.8 is stable and widely supported
-version: "3.8"
 
 services:
 
