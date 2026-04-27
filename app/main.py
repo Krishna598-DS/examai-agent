@@ -1,45 +1,57 @@
 # app/main.py
-from contextlib import asynccontextmanager
-import structlog
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from app.config import settings
 import asyncio
 import time
+from contextlib import asynccontextmanager
 
-structlog.configure(
-    processors=[
-        structlog.stdlib.add_log_level,
-        structlog.stdlib.PositionalArgumentsFormatter(),
-        structlog.processors.TimeStamper(fmt="iso"),
-        structlog.processors.JSONRenderer()
-    ]
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+
+from app.config import settings
+from app.logger import setup_logging, get_logger
+from app.exceptions import (
+    ExamAIException,
+    examai_exception_handler,
+    http_exception_handler,
+    unhandled_exception_handler,
 )
 
-logger = structlog.get_logger()
+# Setup logging FIRST before anything else
+# Why first? Any error during startup should also be logged properly
+setup_logging()
+logger = get_logger(__name__)
 
-# "lifespan" is the modern FastAPI way to handle startup and shutdown.
-# @asynccontextmanager makes it work with Python's "async with" pattern.
-# The code BEFORE "yield" runs on startup.
-# The code AFTER "yield" runs on shutdown.
-# Why better than @app.on_event? It's a single function that handles
-# both startup and shutdown, and it's the official Python async pattern.
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup
-    logger.info("server_starting",
-                app=settings.app_name,
-                version=settings.app_version)
+    logger.info(
+        "server_starting",
+        app=settings.app_name,
+        version=settings.app_version,
+        env=settings.env,
+        debug=settings.debug,
+    )
     yield
-    # Shutdown — we'll add cleanup here later (close DB connections, etc.)
-    logger.info("server_stopping")
+    # Shutdown
+    logger.info("server_stopping", app=settings.app_name)
+
 
 app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
     description="Multi-agent research system for JEE and UPSC exam preparation",
-    lifespan=lifespan  # Pass the lifespan handler here
+    lifespan=lifespan,
+    # In production, hide the /docs and /redoc endpoints
+    # Exposing API docs publicly can aid attackers
+    docs_url="/docs" if settings.is_development else None,
+    redoc_url="/redoc" if settings.is_development else None,
 )
+
+# Register exception handlers
+# Order matters — more specific exceptions first
+app.add_exception_handler(ExamAIException, examai_exception_handler)
+app.add_exception_handler(HTTPException, http_exception_handler)
+app.add_exception_handler(Exception, unhandled_exception_handler)
 
 app.add_middleware(
     CORSMiddleware,
@@ -48,53 +60,61 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 async def root():
+    logger.info("root_endpoint_called")
     return {
         "app": settings.app_name,
         "version": settings.app_version,
-        "status": "running"
+        "env": settings.env,
+        "status": "running",
     }
+
 
 @app.get("/health")
 async def health():
-    return {"status": "ok"}
+    return {"status": "ok", "env": settings.env}
 
 
 @app.get("/demo/concurrent")
 async def demo_concurrent():
-    """
-    This endpoint demonstrates why async matters.
-    It runs three simulated agent calls concurrently.
-    Without async this would take 6 seconds.
-    With asyncio.gather() it takes 3 seconds.
-    """
-    
+    """Demonstrates async concurrency with simulated agent calls."""
+
     async def fake_search(query: str, delay: float):
         await asyncio.sleep(delay)
         return {"agent": "search", "query": query, "delay": delay}
-    
+
     async def fake_pdf(filename: str, delay: float):
         await asyncio.sleep(delay)
         return {"agent": "pdf", "filename": filename, "delay": delay}
-    
+
     async def fake_verify(claim: str, delay: float):
         await asyncio.sleep(delay)
         return {"agent": "verify", "claim": claim, "delay": delay}
-    
+
     start = time.time()
-    
-    # All three run simultaneously — total time = max(2, 3, 1) = 3 seconds
     search_result, pdf_result, verify_result = await asyncio.gather(
         fake_search("JEE Physics", delay=2),
         fake_pdf("ncert.pdf", delay=3),
         fake_verify("Newton's 2nd law", delay=1),
     )
-    
-    elapsed = round(time.time() - start, 2)
-    
+
     return {
-        "elapsed_seconds": elapsed,
-        "note": "Three agents ran concurrently. Total = slowest agent, not sum.",
-        "results": [search_result, pdf_result, verify_result]
+        "elapsed_seconds": round(time.time() - start, 2),
+        "note": "Three agents ran concurrently. Total = slowest, not sum.",
+        "results": [search_result, pdf_result, verify_result],
     }
+
+
+@app.get("/demo/error")
+async def demo_error():
+    """
+    Demonstrates error handling.
+    Intentionally raises an exception to show how it's caught and formatted.
+    """
+    logger.warning("demo_error_endpoint_called")
+    raise ExamAIException(
+        message="This is a demo error",
+        details={"hint": "This was intentional", "endpoint": "/demo/error"}
+    )
