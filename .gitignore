@@ -1,0 +1,23 @@
+# Virtual environment — never commit this (hundreds of MB, machine-specific)
+.venv/
+
+# Environment variables — never commit this (contains your API keys)
+.env
+
+# Python compiled files — auto-generated, no need to track
+__pycache__/
+*.pyc
+*.pyo
+
+# OS junk files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/settings.json
+.idea/
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+htmlcov/
