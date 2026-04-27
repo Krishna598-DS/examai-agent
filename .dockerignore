@@ -1,0 +1,22 @@
+# Virtual environment — Docker installs its own inside the container
+.venv/
+
+# Never copy secrets into Docker images
+.env
+
+# Git history — not needed in the container
+.git/
+.gitignore
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Test files — not needed in production image
+tests/
+.pytest_cache/
+.coverage
+
+# Documentation
+*.md

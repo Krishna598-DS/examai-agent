@@ -21,3 +21,6 @@ Thumbs.db
 .pytest_cache/
 .coverage
 htmlcov/
+data/chroma/*
+data/chroma/*
+!data/chroma/.gitkeep

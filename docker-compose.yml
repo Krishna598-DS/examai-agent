@@ -1,0 +1,77 @@
+# docker-compose.yml
+# Version 3.8 is stable and widely supported
+version: "3.8"
+
+services:
+
+  # --- Our FastAPI application ---
+  app:
+    # Build from the Dockerfile in the current directory
+    build: .
+    # Name the running container
+    container_name: examai-app
+    # Map port 8000 on your laptop to port 8000 inside the container
+    # Format: "host_port:container_port"
+    ports:
+      - "8000:8000"
+    # Environment variables passed into the container
+    # These override anything in the image
+    environment:
+      - ENV=development
+      - LOG_LEVEL=DEBUG
+      - LOG_FORMAT=console
+      - REDIS_URL=redis://redis:6379
+      # Note: redis://redis:6379 — "redis" is the service name below,
+      # Docker Compose creates DNS entries for each service name
+      # so containers can find each other by name
+    # Load secrets from .env file
+    # This is safer than hardcoding them above
+    env_file:
+      - .env
+    # This container depends on redis being healthy before starting
+    depends_on:
+      redis:
+        condition: service_healthy
+    # Mount the data directory as a volume
+    # Why? ChromaDB data persists on your laptop even if container restarts
+    # Without this, all vector data is lost every time container stops
+    volumes:
+      - ./data:/app/data
+    # Restart policy: if the container crashes, restart it automatically
+    # "unless-stopped" means restart always except when you manually stop it
+    restart: unless-stopped
+    # Connect to our custom network
+    networks:
+      - examai-network
+
+  # --- Redis cache ---
+  redis:
+    # Use the official Redis image — no Dockerfile needed
+    image: redis:7-alpine
+    # Alpine = minimal Linux (5MB vs 100MB for full Redis image)
+    container_name: examai-redis
+    ports:
+      - "6379:6379"
+    # Persist Redis data to disk
+    volumes:
+      - redis_data:/data
+    # Health check for Redis
+    # redis-cli ping returns "PONG" if Redis is healthy
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - examai-network
+
+# Named volumes — managed by Docker, persist between container restarts
+volumes:
+  redis_data:
+
+# Custom network — containers on the same network can reach each other by name
+# This isolates our app from other Docker containers on your machine
+networks:
+  examai-network:
+    driver: bridge
