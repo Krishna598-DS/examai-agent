@@ -7,6 +7,7 @@ from app.tools.vector_store import vector_store
 from app.logger import get_logger
 from app.agents.verifier_agent import verifier_agent
 from app.agents.search_agent import search_agent
+from app.orchestrator.graph import orchestrator
 
 logger = get_logger(__name__)
 router = APIRouter(prefix="/api/v1", tags=["agents"])
@@ -93,3 +94,25 @@ async def verify_endpoint(request: QueryRequest):
     )
 
     return final
+
+@router.post("/ask")
+async def ask_endpoint(request: QueryRequest):
+    """
+    Main endpoint. Orchestrates all agents:
+    1. Cache check
+    2. Search + PDF concurrently
+    3. Cross-verification
+    4. Self-correction if needed
+    Returns a verified, confidence-scored answer.
+    """
+    logger.info("ask_endpoint_called", question=request.question[:100])
+    return await orchestrator.run(request.question)
+
+
+@router.get("/orchestrator/stats")
+async def orchestrator_stats():
+    """Get orchestrator and cache statistics."""
+    return {
+        "orchestrator": orchestrator.get_stats(),
+        "vector_store": vector_store.get_stats(),
+    }
