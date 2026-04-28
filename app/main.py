@@ -5,7 +5,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-
+from app.api.routes import router
 from app.config import settings
 from app.logger import setup_logging, get_logger
 from app.exceptions import (
@@ -60,7 +60,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
+app.include_router(router)
 @app.get("/")
 async def root():
     logger.info("root_endpoint_called")
