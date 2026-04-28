@@ -6,7 +6,7 @@ from langchain.agents import AgentExecutor, create_react_agent
 from langchain_core.prompts import PromptTemplate
 from pydantic import BaseModel, Field
 from typing import Optional
-from app.tools.web_search import search_serper, format_search_results
+from app.tools.web_search import search_and_scrape, format_search_results
 from app.config import settings
 from app.logger import get_logger
 from app.exceptions import AgentError, SearchError
@@ -32,16 +32,18 @@ class SearchInput(BaseModel):
 
 async def search_tool_func(query: str, num_results: int = 5) -> str:
     """
-    The actual function that runs when the agent calls the search tool.
-    Returns formatted text that the agent can read and reason about.
+    Search + scrape for richer content.
+    Falls back to snippet-only if scraping fails.
     """
     try:
-        results = await search_serper(query, num_results)
-        return format_search_results(results)
+        # Use the richer search_and_scrape pipeline
+        return await search_and_scrape(
+            query,
+            num_results=num_results,
+            scrape_top_n=2
+        )
     except SearchError as e:
-        # Return error as string — agent can read this and decide what to do
         return f"Search failed: {e.message}"
-
 
 # SYSTEM PROMPT — this is what shapes the agent's personality and behavior
 # This is one of the most important parts of agent engineering.
