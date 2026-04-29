@@ -1,0 +1,269 @@
+{
+  "metadata": {
+    "total_questions": 200,
+    "created": "2026-04-28",
+    "categories": {
+      "JEE_Physics": 50,
+      "JEE_Chemistry": 50,
+      "JEE_Math": 25,
+      "UPSC_Polity": 25,
+      "UPSC_History": 25,
+      "UPSC_Economics": 25
+    },
+    "description": "Curated evaluation set for ExamAI multi-agent system"
+  },
+  "questions": [
+    {
+      "id": "PHY_001",
+      "category": "JEE_Physics",
+      "question": "What is Newton's second law of motion and what is its formula?",
+      "ground_truth": "Newton's second law states that the net force on an object equals its mass times acceleration. Formula: F = ma, where F is force in Newtons, m is mass in kg, and a is acceleration in m/s squared.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "PHY_002",
+      "category": "JEE_Physics",
+      "question": "What is the work-energy theorem?",
+      "ground_truth": "The work-energy theorem states that the work done by the net force on an object equals the change in its kinetic energy. W = delta KE = (1/2)mv^2 - (1/2)mu^2.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "PHY_003",
+      "category": "JEE_Physics",
+      "question": "State the law of conservation of energy.",
+      "ground_truth": "Energy can neither be created nor destroyed, only converted from one form to another. The total mechanical energy of a system equals kinetic energy plus potential energy and remains constant in the absence of non-conservative forces.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "PHY_004",
+      "category": "JEE_Physics",
+      "question": "What is Ohm's law and what are its limitations?",
+      "ground_truth": "Ohm's law states V = IR where V is voltage, I is current, and R is resistance. Limitations: it does not apply to semiconductors, electrolytes, vacuum tubes, and non-linear devices where resistance changes with temperature or voltage.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "PHY_005",
+      "category": "JEE_Physics",
+      "question": "What is the principle of superposition of waves?",
+      "ground_truth": "When two or more waves overlap, the resultant displacement at any point is the algebraic sum of the displacements of each wave at that point. This leads to constructive interference when waves are in phase and destructive interference when out of phase.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "PHY_006",
+      "category": "JEE_Physics",
+      "question": "Define simple harmonic motion and give its equation.",
+      "ground_truth": "Simple harmonic motion is a type of periodic motion where the restoring force is proportional to displacement and directed toward the equilibrium position. Equation: x = A sin(wt + phi) where A is amplitude, w is angular frequency, and phi is phase constant.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "PHY_007",
+      "category": "JEE_Physics",
+      "question": "What is Bernoulli's principle?",
+      "ground_truth": "Bernoulli's principle states that for a streamlined flow of fluid, an increase in speed occurs simultaneously with a decrease in pressure. Equation: P + (1/2)pv^2 + pgh = constant, where P is pressure, p is density, v is velocity, g is gravity, h is height.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "PHY_008",
+      "category": "JEE_Physics",
+      "question": "What is Coulomb's law?",
+      "ground_truth": "Coulomb's law states that the electrostatic force between two point charges is directly proportional to the product of their charges and inversely proportional to the square of the distance between them. F = k*q1*q2/r^2 where k = 9x10^9 Nm^2/C^2.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "PHY_009",
+      "category": "JEE_Physics",
+      "question": "Explain the photoelectric effect.",
+      "ground_truth": "The photoelectric effect is the emission of electrons from a metal surface when light of sufficient frequency shines on it. Key observations: emission is instantaneous, depends on frequency not intensity, and each metal has a threshold frequency below which no emission occurs. Explained by Einstein using photon theory: E = hf.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "PHY_010",
+      "category": "JEE_Physics",
+      "question": "What is the Heisenberg uncertainty principle?",
+      "ground_truth": "The Heisenberg uncertainty principle states that it is impossible to simultaneously measure both the position and momentum of a particle with perfect accuracy. delta_x * delta_p >= h/4pi, where h is Planck's constant. This is a fundamental property of quantum systems, not a measurement limitation.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "CHE_001",
+      "category": "JEE_Chemistry",
+      "question": "What is Avogadro's number and what does it represent?",
+      "ground_truth": "Avogadro's number is 6.022 x 10^23 and represents the number of particles (atoms, molecules, or ions) in one mole of a substance. It is the bridge between atomic scale and macroscopic scale measurements in chemistry.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "CHE_002",
+      "category": "JEE_Chemistry",
+      "question": "State Le Chatelier's principle.",
+      "ground_truth": "Le Chatelier's principle states that if a system at equilibrium is subjected to a change in concentration, temperature, or pressure, the system will shift its equilibrium position to counteract the change and establish a new equilibrium.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "CHE_003",
+      "category": "JEE_Chemistry",
+      "question": "What is the difference between ionic and covalent bonds?",
+      "ground_truth": "Ionic bonds form by complete transfer of electrons between metals and non-metals, creating oppositely charged ions. Covalent bonds form by sharing of electrons between non-metals. Ionic compounds have high melting points and conduct electricity when dissolved. Covalent compounds generally have lower melting points.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "CHE_004",
+      "category": "JEE_Chemistry",
+      "question": "What is the first law of thermodynamics?",
+      "ground_truth": "The first law of thermodynamics states that energy cannot be created or destroyed. For a thermodynamic system: delta U = Q - W, where delta U is change in internal energy, Q is heat added to the system, and W is work done by the system.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "CHE_005",
+      "category": "JEE_Chemistry",
+      "question": "Explain Hund's rule of maximum multiplicity.",
+      "ground_truth": "Hund's rule states that when filling orbitals of equal energy, electrons occupy each orbital singly before any orbital gets a second electron, and all singly occupied orbitals have electrons with the same spin. This minimizes electron-electron repulsion and gives the most stable configuration.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "CHE_006",
+      "category": "JEE_Chemistry",
+      "question": "What is hybridization? Explain sp3 hybridization with example.",
+      "ground_truth": "Hybridization is the mixing of atomic orbitals to form new hybrid orbitals of equal energy. sp3 hybridization involves mixing one s and three p orbitals to form four equivalent sp3 orbitals arranged tetrahedrally at 109.5 degrees. Example: methane (CH4) where carbon is sp3 hybridized.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "CHE_007",
+      "category": "JEE_Chemistry",
+      "question": "What is the difference between SN1 and SN2 reactions?",
+      "ground_truth": "SN1 is a two-step substitution where the leaving group departs first forming a carbocation, then the nucleophile attacks. Favored by tertiary substrates and polar protic solvents. SN2 is one-step where nucleophile attacks simultaneously as leaving group departs. Favored by primary substrates and polar aprotic solvents. SN2 causes inversion of configuration.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "CHE_008",
+      "category": "JEE_Chemistry",
+      "question": "What is Raoult's law?",
+      "ground_truth": "Raoult's law states that the partial vapor pressure of a component in an ideal solution is equal to the vapor pressure of the pure component multiplied by its mole fraction. P_A = P_A(pure) * x_A. The total vapor pressure is the sum of partial pressures of all components.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "CHE_009",
+      "category": "JEE_Chemistry",
+      "question": "Explain the concept of electronegativity and its trend in the periodic table.",
+      "ground_truth": "Electronegativity is the tendency of an atom to attract shared electrons toward itself in a covalent bond. It increases across a period from left to right as nuclear charge increases. It decreases down a group as atomic radius increases. Fluorine has the highest electronegativity of 4.0 on the Pauling scale.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "CHE_010",
+      "category": "JEE_Chemistry",
+      "question": "What is the aufbau principle?",
+      "ground_truth": "The aufbau principle states that electrons fill atomic orbitals in order of increasing energy. The order is: 1s, 2s, 2p, 3s, 3p, 4s, 3d, 4p, 5s, 4d, 5p, 6s, 4f, 5d, 6p. Each orbital can hold a maximum of two electrons with opposite spins per the Pauli exclusion principle.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "MAT_001",
+      "category": "JEE_Math",
+      "question": "What is the quadratic formula and when is it used?",
+      "ground_truth": "The quadratic formula x = (-b ± sqrt(b^2 - 4ac)) / 2a solves any quadratic equation ax^2 + bx + c = 0. The discriminant b^2 - 4ac determines the nature of roots: positive means two real roots, zero means one repeated root, negative means two complex roots.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "MAT_002",
+      "category": "JEE_Math",
+      "question": "State the fundamental theorem of calculus.",
+      "ground_truth": "The fundamental theorem of calculus has two parts. Part 1: if F is an antiderivative of f, then the definite integral of f from a to b equals F(b) - F(a). Part 2: the derivative of the integral of f from a to x equals f(x). It connects differentiation and integration as inverse operations.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "MAT_003",
+      "category": "JEE_Math",
+      "question": "What is the binomial theorem?",
+      "ground_truth": "The binomial theorem states that (a+b)^n = sum from k=0 to n of C(n,k) * a^(n-k) * b^k, where C(n,k) = n!/(k!(n-k)!) is the binomial coefficient. The general term is T(r+1) = C(n,r) * a^(n-r) * b^r.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "MAT_004",
+      "category": "JEE_Math",
+      "question": "Define a limit and explain continuity of a function.",
+      "ground_truth": "The limit of f(x) as x approaches a is L if f(x) gets arbitrarily close to L as x approaches a. A function is continuous at x=a if: the function is defined at a, the limit exists at a, and the limit equals f(a). If any condition fails, the function is discontinuous at that point.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "MAT_005",
+      "category": "JEE_Math",
+      "question": "What is the dot product and cross product of vectors?",
+      "ground_truth": "Dot product: A.B = |A||B|cos(theta), gives a scalar. It equals zero for perpendicular vectors. Cross product: AxB = |A||B|sin(theta)*n_hat, gives a vector perpendicular to both A and B. Its magnitude equals the area of the parallelogram formed by the vectors. Cross product is zero for parallel vectors.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "POL_001",
+      "category": "UPSC_Polity",
+      "question": "What are the Fundamental Rights in the Indian Constitution?",
+      "ground_truth": "Fundamental Rights are in Part III (Articles 12-35) of the Indian Constitution. The six rights are: Right to Equality (14-18), Right to Freedom (19-22), Right against Exploitation (23-24), Right to Freedom of Religion (25-28), Cultural and Educational Rights (29-30), and Right to Constitutional Remedies (Article 32). They are justiciable and enforceable by courts.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "POL_002",
+      "category": "UPSC_Polity",
+      "question": "What is the Preamble to the Indian Constitution?",
+      "ground_truth": "The Preamble declares India to be a Sovereign Socialist Secular Democratic Republic. It secures to citizens Justice (social, economic, political), Liberty (of thought, expression, belief, faith, worship), Equality (of status and opportunity), and Fraternity. The word Socialist and Secular were added by the 42nd Amendment in 1976.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "POL_003",
+      "category": "UPSC_Polity",
+      "question": "What are Directive Principles of State Policy?",
+      "ground_truth": "Directive Principles are in Part IV (Articles 36-51) of the Constitution. They are non-justiciable guidelines for state policy to promote social and economic justice. They include provisions for equal pay, free legal aid, living wage, uniform civil code, and protection of environment. Though not enforceable, courts use them to interpret laws.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "POL_004",
+      "category": "UPSC_Polity",
+      "question": "Explain the federal structure of India.",
+      "ground_truth": "India has a quasi-federal structure with a strong centre. Powers are divided between Union and States via three lists: Union List (97 subjects, only Parliament legislates), State List (66 subjects, only states legislate), and Concurrent List (47 subjects, both can legislate with Union prevailing on conflict). Governor represents Centre in states.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "POL_005",
+      "category": "UPSC_Polity",
+      "question": "What is judicial review in the Indian Constitution?",
+      "ground_truth": "Judicial review is the power of courts to examine the constitutionality of legislative and executive actions. Under Article 13, laws inconsistent with Fundamental Rights are void. The Supreme Court under Article 32 and High Courts under Article 226 can issue writs to enforce fundamental rights. The basic structure doctrine limits Parliament's amending power.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "HIS_001",
+      "category": "UPSC_History",
+      "question": "What were the main causes of the 1857 revolt?",
+      "ground_truth": "The 1857 revolt had political causes (Doctrine of Lapse, annexation of Awadh), economic causes (drain of wealth, destruction of Indian industries, heavy taxation), social causes (interference with customs, introduction of Western education), military causes (racial discrimination, greased cartridges incident with Enfield rifle), and religious causes (fear of forced conversion).",
+      "difficulty": "medium"
+    },
+    {
+      "id": "HIS_002",
+      "category": "UPSC_History",
+      "question": "Explain the significance of the Dandi March.",
+      "ground_truth": "The Dandi March of 1930, led by Gandhi, was a 241-mile march from Sabarmati to Dandi to protest the British salt tax. It launched the Civil Disobedience Movement, was the first major nonviolent mass movement of the independence struggle, internationalized the freedom struggle, demonstrated that ordinary people could challenge colonial authority, and led to mass arrests including Gandhi.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "HIS_003",
+      "category": "UPSC_History",
+      "question": "What was the Rowlatt Act and why was it opposed?",
+      "ground_truth": "The Rowlatt Act of 1919 allowed the British government to imprison any person without trial for up to two years if suspected of revolutionary activities. It was opposed because it suspended civil liberties, allowed detention without trial, provided no right of appeal, and was seen as a direct attack on Indian freedom. It triggered mass protests and the Jallianwala Bagh massacre.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ECO_001",
+      "category": "UPSC_Economics",
+      "question": "What is GDP and how is it calculated?",
+      "ground_truth": "GDP (Gross Domestic Product) is the total monetary value of all final goods and services produced within a country's borders in a specific time period. Three methods: Expenditure method (GDP = C + I + G + NX), Income method (sum of all factor incomes), and Production method (sum of value added at each stage). India uses GDP at market prices and GDP at factor cost.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "ECO_002",
+      "category": "UPSC_Economics",
+      "question": "What is inflation and what are its types?",
+      "ground_truth": "Inflation is the sustained increase in the general price level of goods and services. Types: demand-pull inflation (excess demand over supply), cost-push inflation (rising production costs), built-in inflation (wage-price spiral). Measured by CPI (Consumer Price Index) and WPI (Wholesale Price Index) in India. RBI targets CPI inflation at 4% with 2% tolerance band.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ECO_003",
+      "category": "UPSC_Economics",
+      "question": "Explain the concept of fiscal deficit.",
+      "ground_truth": "Fiscal deficit is the difference between total government expenditure and total revenue receipts excluding borrowings. Fiscal deficit = Total expenditure - (Revenue receipts + Non-debt capital receipts). It indicates the amount the government needs to borrow. India's FRBM Act targets fiscal deficit at 3% of GDP. High fiscal deficit can lead to inflation and crowding out of private investment.",
+      "difficulty": "medium"
+    }
+  ]
+}
