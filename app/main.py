@@ -8,6 +8,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.routes import router
 from app.config import settings
 from app.logger import setup_logging, get_logger
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from app.exceptions import (
     ExamAIException,
     examai_exception_handler,
@@ -73,6 +75,11 @@ async def root():
         "status": "running",
     }
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.get("/ui")
+async def serve_ui():
+    return FileResponse("static/index.html")
 
 @app.get("/health")
 async def health():

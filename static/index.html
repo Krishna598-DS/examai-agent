@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ExamAI — JEE & UPSC Research Agent</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f1117;
+    color: #e1e4e8;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    padding: 20px 40px;
+    border-bottom: 1px solid #21262d;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #58a6ff;
+  }
+
+  .logo span {
+    color: #e1e4e8;
+    font-weight: 400;
+  }
+
+  .badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: #1f6feb33;
+    color: #58a6ff;
+    border: 1px solid #1f6feb66;
+  }
+
+  .main {
+    flex: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 40px 20px;
+  }
+
+  .hero {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+    font-weight: 600;
+    color: #f0f6fc;
+    margin-bottom: 10px;
+  }
+
+  .hero p {
+    font-size: 15px;
+    color: #8b949e;
+    line-height: 1.6;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .stat-card {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #58a6ff;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: #8b949e;
+    margin-top: 4px;
+  }
+
+  .search-box {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+
+  .search-box textarea {
+    width: 100%;
+    background: #0d1117;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+    color: #e1e4e8;
+    font-size: 15px;
+    padding: 14px;
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+    line-height: 1.5;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-box textarea:focus {
+    border-color: #58a6ff;
+  }
+
+  .search-box textarea::placeholder {
+    color: #484f58;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .category-select {
+    background: #0d1117;
+    border: 1px solid #21262d;
+    border-radius: 6px;
+    color: #e1e4e8;
+    font-size: 13px;
+    padding: 8px 12px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .ask-btn {
+    background: #238636;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-left: auto;
+  }
+
+  .ask-btn:hover { background: #2ea043; }
+  .ask-btn:disabled { background: #21262d; color: #484f58; cursor: not-allowed; }
+
+  .example-questions {
+    margin-bottom: 32px;
+  }
+
+  .example-questions p {
+    font-size: 12px;
+    color: #8b949e;
+    margin-bottom: 8px;
+  }
+
+  .examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .example-pill {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: #8b949e;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .example-pill:hover {
+    border-color: #58a6ff;
+    color: #58a6ff;
+  }
+
+  .loading {
+    display: none;
+    text-align: center;
+    padding: 40px;
+    color: #8b949e;
+  }
+
+  .spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #21262d;
+    border-top-color: #58a6ff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-steps {
+    font-size: 13px;
+    color: #58a6ff;
+  }
+
+  .result-card {
+    display: none;
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  .result-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #21262d;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .verdict-badge {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .verdict-VERIFIED { background: #1a4721; color: #3fb950; border: 1px solid #2ea04333; }
+  .verdict-CONFLICTED { background: #341a00; color: #f0883e; border: 1px solid #d2960033; }
+  .verdict-UNVERIFIED { background: #161b22; color: #8b949e; border: 1px solid #30363d; }
+  .verdict-LOW_CONFIDENCE { background: #3d1f00; color: #f0883e; border: 1px solid #9e640033; }
+  .verdict-ERROR { background: #490202; color: #f85149; border: 1px solid #f8514933; }
+
+  .confidence-bar-container {
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .confidence-label {
+    font-size: 11px;
+    color: #8b949e;
+    margin-bottom: 4px;
+  }
+
+  .confidence-bar {
+    height: 6px;
+    background: #21262d;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .confidence-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  .conf-high { background: #3fb950; }
+  .conf-mid { background: #f0883e; }
+  .conf-low { background: #f85149; }
+
+  .meta-pills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .meta-pill {
+    font-size: 11px;
+    padding: 3px 8px;
+    background: #0d1117;
+    border: 1px solid #21262d;
+    border-radius: 4px;
+    color: #8b949e;
+  }
+
+  .meta-pill.cache { color: #58a6ff; border-color: #1f6feb33; }
+
+  .result-body {
+    padding: 20px;
+  }
+
+  .answer-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #e1e4e8;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .sources-section {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #21262d;
+  }
+
+  .sources-label {
+    font-size: 11px;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  .sources-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .source-item {
+    font-size: 12px;
+    color: #58a6ff;
+  }
+
+  .reasoning-section {
+    margin-top: 12px;
+    padding: 12px;
+    background: #0d1117;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #8b949e;
+    line-height: 1.5;
+  }
+
+  .conflict-section {
+    margin-top: 12px;
+    padding: 12px;
+    background: #1c1108;
+    border: 1px solid #f0883e33;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #f0883e;
+    line-height: 1.5;
+  }
+
+  .history {
+    margin-top: 32px;
+  }
+
+  .history h3 {
+    font-size: 13px;
+    color: #8b949e;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .history-item {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .history-item:hover { border-color: #30363d; }
+
+  .history-q {
+    flex: 1;
+    font-size: 13px;
+    color: #c9d1d9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .history-verdict {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+
+  .error-box {
+    display: none;
+    background: #1c0808;
+    border: 1px solid #f8514933;
+    border-radius: 8px;
+    padding: 16px;
+    color: #f85149;
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: #484f58;
+    border-top: 1px solid #21262d;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Exam<span>AI</span></div>
+  <div class="badge">Multi-Agent</div>
+  <div class="badge">JEE · UPSC</div>
+</header>
+
+<div class="main">
+
+  <div class="hero">
+    <h1>AI Research Agent for Competitive Exams</h1>
+    <p>Ask any JEE or UPSC question. The system searches the web, reads study material,<br>
+    cross-verifies facts, and returns a confidence-scored answer.</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value">0.581</div>
+      <div class="stat-label">RAGAS Score</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">72.7%</div>
+      <div class="stat-label">Verification Rate</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">3</div>
+      <div class="stat-label">Agents</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">67Kx</div>
+      <div class="stat-label">Cache Speedup</div>
+    </div>
+  </div>
+
+  <div class="search-box">
+    <textarea id="questionInput"
+      placeholder="Ask a JEE or UPSC question...
+e.g. What is Newton's second law of motion?
+e.g. What are the Fundamental Rights in the Indian Constitution?"></textarea>
+    <div class="controls">
+      <select class="category-select" id="categoryHint">
+        <option value="">All categories</option>
+        <option value="JEE Physics">JEE Physics</option>
+        <option value="JEE Chemistry">JEE Chemistry</option>
+        <option value="JEE Math">JEE Math</option>
+        <option value="UPSC Polity">UPSC Polity</option>
+        <option value="UPSC History">UPSC History</option>
+        <option value="UPSC Economics">UPSC Economics</option>
+      </select>
+      <button class="ask-btn" id="askBtn" onclick="askQuestion()">Ask Agent</button>
+    </div>
+  </div>
+
+  <div class="example-questions">
+    <p>Try an example:</p>
+    <div class="examples">
+      <div class="example-pill" onclick="setExample(this)">Newton\'s second law</div>
+      <div class="example-pill" onclick="setExample(this)">Photoelectric effect for JEE</div>
+      <div class="example-pill" onclick="setExample(this)">Fundamental Rights in Indian Constitution</div>
+      <div class="example-pill" onclick="setExample(this)">What is Le Chatelier\'s principle?</div>
+      <div class="example-pill" onclick="setExample(this)">Causes of 1857 revolt UPSC</div>
+      <div class="example-pill" onclick="setExample(this)">What is fiscal deficit?</div>
+      <div class="example-pill" onclick="setExample(this)">Heisenberg uncertainty principle</div>
+      <div class="example-pill" onclick="setExample(this)">Dandi March significance</div>
+    </div>
+  </div>
+
+  <div class="error-box" id="errorBox"></div>
+
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-steps" id="loadingStep">Initializing agents...</div>
+  </div>
+
+  <div class="result-card" id="resultCard">
+    <div class="result-header">
+      <div class="verdict-badge" id="verdictBadge">VERIFIED</div>
+      <div class="confidence-bar-container">
+        <div class="confidence-label" id="confidenceLabel">Confidence: 0.90</div>
+        <div class="confidence-bar">
+          <div class="confidence-fill" id="confidenceFill" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="meta-pills" id="metaPills"></div>
+    </div>
+    <div class="result-body">
+      <div class="answer-text" id="answerText"></div>
+      <div class="reasoning-section" id="reasoningSection"></div>
+      <div class="conflict-section" id="conflictSection" style="display:none"></div>
+      <div class="sources-section" id="sourcesSection" style="display:none">
+        <div class="sources-label">Sources</div>
+        <div class="sources-list" id="sourcesList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="history" id="historySection" style="display:none">
+    <h3>Recent Questions</h3>
+    <div id="historyList"></div>
+  </div>
+
+</div>
+
+<footer>
+  ExamAI Agent · Multi-agent system · JEE &amp; UPSC research
+</footer>
+
+<script>
+const API_BASE = '';
+let history = [];
+let loadingInterval = null;
+
+const loadingMessages = [
+  'Searching the web...',
+  'Reading study material...',
+  'Cross-verifying facts...',
+  'Computing confidence score...',
+  'Synthesizing answer...'
+];
+
+function setExample(el) {
+  document.getElementById('questionInput').value = el.textContent;
+  document.getElementById('questionInput').focus();
+}
+
+function showLoading() {
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('resultCard').style.display = 'none';
+  document.getElementById('errorBox').style.display = 'none';
+  document.getElementById('askBtn').disabled = true;
+
+  let step = 0;
+  document.getElementById('loadingStep').textContent = loadingMessages[0];
+  loadingInterval = setInterval(() => {
+    step = (step + 1) % loadingMessages.length;
+    document.getElementById('loadingStep').textContent = loadingMessages[step];
+  }, 3000);
+}
+
+function hideLoading() {
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('askBtn').disabled = false;
+  if (loadingInterval) clearInterval(loadingInterval);
+}
+
+function showError(msg) {
+  const box = document.getElementById('errorBox');
+  box.textContent = 'Error: ' + msg;
+  box.style.display = 'block';
+}
+
+function getConfidenceClass(score) {
+  if (score >= 0.7) return 'conf-high';
+  if (score >= 0.5) return 'conf-mid';
+  return 'conf-low';
+}
+
+function showResult(data) {
+  const card = document.getElementById('resultCard');
+  card.style.display = 'block';
+
+  // Verdict badge
+  const badge = document.getElementById('verdictBadge');
+  badge.textContent = data.verdict;
+  badge.className = 'verdict-badge verdict-' + data.verdict;
+
+  // Confidence bar
+  const pct = Math.round((data.confidence_score || 0) * 100);
+  document.getElementById('confidenceLabel').textContent =
+    'Confidence: ' + (data.confidence_score || 0).toFixed(2);
+  const fill = document.getElementById('confidenceFill');
+  fill.style.width = pct + '%';
+  fill.className = 'confidence-fill ' + getConfidenceClass(data.confidence_score);
+
+  // Meta pills
+  const pills = document.getElementById('metaPills');
+  pills.innerHTML = '';
+
+  if (data.from_cache) {
+    pills.innerHTML += '<span class="meta-pill cache">⚡ Cached</span>';
+  }
+
+  if (data.pipeline_duration_seconds) {
+    const dur = data.from_cache
+      ? (data.cache_latency_ms || 0).toFixed(1) + 'ms'
+      : data.pipeline_duration_seconds.toFixed(1) + 's';
+    pills.innerHTML += '<span class="meta-pill">⏱ ' + dur + '</span>';
+  }
+
+  if (data.agents_used && data.agents_used.length) {
+    pills.innerHTML += '<span class="meta-pill">🤖 ' +
+      data.agents_used.join(' + ') + '</span>';
+  }
+
+  // Answer
+  document.getElementById('answerText').textContent = data.final_answer || '';
+
+  // Reasoning
+  const reasoning = document.getElementById('reasoningSection');
+  if (data.reasoning) {
+    reasoning.textContent = '💭 ' + data.reasoning;
+    reasoning.style.display = 'block';
+  } else {
+    reasoning.style.display = 'none';
+  }
+
+  // Conflict explanation
+  const conflict = document.getElementById('conflictSection');
+  if (data.conflict_explanation) {
+    conflict.textContent = '⚠️ ' + data.conflict_explanation;
+    conflict.style.display = 'block';
+  } else {
+    conflict.style.display = 'none';
+  }
+
+  // Sources
+  const sourcesSection = document.getElementById('sourcesSection');
+  const sourcesList = document.getElementById('sourcesList');
+  const sources = data.source_answers
+    ? Object.entries(data.source_answers).map(([k, v]) => k + ' agent')
+    : [];
+
+  if (sources.length) {
+    sourcesList.innerHTML = sources.map(s =>
+      '<div class="source-item">• ' + s + '</div>'
+    ).join('');
+    sourcesSection.style.display = 'block';
+  } else {
+    sourcesSection.style.display = 'none';
+  }
+}
+
+function addToHistory(question, verdict, confidence) {
+  history.unshift({ question, verdict, confidence });
+  if (history.length > 5) history.pop();
+  renderHistory();
+}
+
+function renderHistory() {
+  const section = document.getElementById('historySection');
+  const list = document.getElementById('historyList');
+
+  if (!history.length) {
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = 'block';
+  list.innerHTML = history.map((h, i) => `
+    <div class="history-item" onclick="reaskQuestion(${i})">
+      <div class="history-q">${h.question}</div>
+      <div class="history-verdict verdict-${h.verdict}" style="font-size:11px;padding:2px 8px;border-radius:10px;">
+        ${h.verdict}
+      </div>
+    </div>
+  `).join('');
+}
+
+function reaskQuestion(index) {
+  document.getElementById('questionInput').value = history[index].question;
+  askQuestion();
+}
+
+async function askQuestion() {
+  const question = document.getElementById('questionInput').value.trim();
+
+  if (!question) {
+    showError('Please enter a question');
+    return;
+  }
+
+  if (question.length < 10) {
+    showError('Question must be at least 10 characters');
+    return;
+  }
+
+  showLoading();
+
+  try {
+    const response = await fetch(API_BASE + '/api/v1/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question })
+    });
+
+    if (!response.ok) {
+      const err = await response.json();
+      throw new Error(err.message || 'Server error ' + response.status);
+    }
+
+    const data = await response.json();
+    hideLoading();
+    showResult(data);
+    addToHistory(question, data.verdict, data.confidence_score);
+
+  } catch (err) {
+    hideLoading();
+    showError(err.message);
+  }
+}
+
+// Allow Ctrl+Enter to submit
+document.getElementById('questionInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+    askQuestion();
+  }
+});
+</script>
+
+</body>
+</html>
