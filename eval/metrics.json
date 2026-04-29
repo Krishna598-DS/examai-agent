@@ -1,23 +1,23 @@
 {
   "overall": {
-    "faithfulness": 0.587,
-    "answer_relevancy": 0.694,
+    "faithfulness": 0.751,
+    "answer_relevancy": 0.773,
     "context_recall": 0.2,
-    "context_precision": 0.5,
-    "ragas_score": 0.495,
+    "context_precision": 0.602,
+    "ragas_score": 0.581,
     "n": 33
   },
   "by_category": {
-    "JEE_Physics": 0.486,
-    "JEE_Chemistry": 0.53,
-    "JEE_Math": 0.52,
-    "UPSC_Polity": 0.509,
-    "UPSC_History": 0.344
+    "JEE_Physics": 0.54,
+    "JEE_Chemistry": 0.562,
+    "JEE_Math": 0.585,
+    "UPSC_Polity": 0.63,
+    "UPSC_History": 0.694
   },
   "by_difficulty": {
-    "easy": 0.577,
-    "medium": 0.445,
-    "hard": 0.486
+    "easy": 0.625,
+    "medium": 0.546,
+    "hard": 0.606
   },
   "per_question": [
     {
@@ -34,11 +34,11 @@
       "id": "PHY_002",
       "category": "JEE_Physics",
       "difficulty": "easy",
-      "faithfulness": 0.3,
-      "answer_relevancy": 0.55,
+      "faithfulness": 0.9,
+      "answer_relevancy": 0.8500000000000001,
       "context_recall": 0.2,
-      "context_precision": 0.3745,
-      "ragas_score": 0.356
+      "context_precision": 0.7350000000000001,
+      "ragas_score": 0.671
     },
     {
       "id": "PHY_003",
@@ -84,31 +84,31 @@
       "id": "PHY_007",
       "category": "JEE_Physics",
       "difficulty": "medium",
-      "faithfulness": 0.3,
-      "answer_relevancy": 0.55,
+      "faithfulness": 0.9,
+      "answer_relevancy": 0.8500000000000001,
       "context_recall": 0.2,
-      "context_precision": 0.20509999999999998,
-      "ragas_score": 0.314
+      "context_precision": 0.493,
+      "ragas_score": 0.611
     },
     {
       "id": "PHY_008",
       "category": "JEE_Physics",
       "difficulty": "easy",
-      "faithfulness": 0.4,
-      "answer_relevancy": 0.55,
+      "faithfulness": 0.32000000000000006,
+      "answer_relevancy": 0.45,
       "context_recall": 0.2,
       "context_precision": 0.272,
-      "ragas_score": 0.356
+      "ragas_score": 0.31
     },
     {
       "id": "PHY_009",
       "category": "JEE_Physics",
       "difficulty": "hard",
-      "faithfulness": 0.95,
-      "answer_relevancy": 0.9,
+      "faithfulness": 0.9,
+      "answer_relevancy": 0.8500000000000001,
       "context_recall": 0.2,
       "context_precision": 0.8680000000000001,
-      "ragas_score": 0.73
+      "ragas_score": 0.705
     },
     {
       "id": "PHY_010",
@@ -124,11 +124,11 @@
       "id": "CHE_001",
       "category": "JEE_Chemistry",
       "difficulty": "easy",
-      "faithfulness": 1.0,
-      "answer_relevancy": 0.9500000000000001,
+      "faithfulness": 0.9,
+      "answer_relevancy": 0.8500000000000001,
       "context_recall": 0.2,
       "context_precision": 0.599,
-      "ragas_score": 0.687
+      "ragas_score": 0.637
     },
     {
       "id": "CHE_002",
@@ -154,21 +154,21 @@
       "id": "CHE_004",
       "category": "JEE_Chemistry",
       "difficulty": "medium",
-      "faithfulness": 0.9,
-      "answer_relevancy": 0.8500000000000001,
+      "faithfulness": 0.3,
+      "answer_relevancy": 0.55,
       "context_recall": 0.2,
-      "context_precision": 0.6020000000000001,
-      "ragas_score": 0.638
+      "context_precision": 0.2814,
+      "ragas_score": 0.333
     },
     {
       "id": "CHE_005",
       "category": "JEE_Chemistry",
       "difficulty": "medium",
-      "faithfulness": 0.32000000000000006,
-      "answer_relevancy": 0.45,
+      "faithfulness": 0.4,
+      "answer_relevancy": 0.55,
       "context_recall": 0.2,
       "context_precision": 0.17600000000000002,
-      "ragas_score": 0.286
+      "ragas_score": 0.332
     },
     {
       "id": "CHE_006",
@@ -194,11 +194,11 @@
       "id": "CHE_008",
       "category": "JEE_Chemistry",
       "difficulty": "medium",
-      "faithfulness": 0.3,
-      "answer_relevancy": 0.55,
+      "faithfulness": 0.9,
+      "answer_relevancy": 0.8500000000000001,
       "context_recall": 0.2,
-      "context_precision": 0.32969999999999994,
-      "ragas_score": 0.345
+      "context_precision": 0.671,
+      "ragas_score": 0.655
     },
     {
       "id": "CHE_009",
@@ -214,51 +214,51 @@
       "id": "CHE_010",
       "category": "JEE_Chemistry",
       "difficulty": "easy",
-      "faithfulness": 0.3,
-      "answer_relevancy": 0.55,
+      "faithfulness": 0.9,
+      "answer_relevancy": 0.8500000000000001,
       "context_recall": 0.2,
-      "context_precision": 0.357,
-      "ragas_score": 0.352
+      "context_precision": 0.71,
+      "ragas_score": 0.665
     },
     {
       "id": "MAT_001",
       "category": "JEE_Math",
       "difficulty": "easy",
-      "faithfulness": 0.9,
-      "answer_relevancy": 0.8500000000000001,
+      "faithfulness": 0.95,
+      "answer_relevancy": 0.9,
       "context_recall": 0.2,
       "context_precision": 0.622,
-      "ragas_score": 0.643
+      "ragas_score": 0.668
     },
     {
       "id": "MAT_002",
       "category": "JEE_Math",
       "difficulty": "hard",
-      "faithfulness": 0.3,
-      "answer_relevancy": 0.55,
+      "faithfulness": 0.9,
+      "answer_relevancy": 0.8500000000000001,
       "context_recall": 0.2,
-      "context_precision": 0.2961,
-      "ragas_score": 0.337
+      "context_precision": 0.623,
+      "ragas_score": 0.643
     },
     {
       "id": "MAT_003",
       "category": "JEE_Math",
       "difficulty": "medium",
-      "faithfulness": 0.3,
-      "answer_relevancy": 0.55,
+      "faithfulness": 0.9,
+      "answer_relevancy": 0.8500000000000001,
       "context_recall": 0.2,
-      "context_precision": 0.3066,
-      "ragas_score": 0.339
+      "context_precision": 0.638,
+      "ragas_score": 0.647
     },
     {
       "id": "MAT_004",
       "category": "JEE_Math",
       "difficulty": "medium",
-      "faithfulness": 0.9,
-      "answer_relevancy": 0.8500000000000001,
+      "faithfulness": 0.4,
+      "answer_relevancy": 0.55,
       "context_recall": 0.2,
-      "context_precision": 0.458,
-      "ragas_score": 0.602
+      "context_precision": 0.0,
+      "ragas_score": 0.288
     },
     {
       "id": "MAT_005",
@@ -274,11 +274,11 @@
       "id": "POL_001",
       "category": "UPSC_Polity",
       "difficulty": "easy",
-      "faithfulness": 1.0,
-      "answer_relevancy": 0.9500000000000001,
+      "faithfulness": 0.95,
+      "answer_relevancy": 0.9,
       "context_recall": 0.2,
       "context_precision": 0.919,
-      "ragas_score": 0.767
+      "ragas_score": 0.742
     },
     {
       "id": "POL_002",
@@ -294,11 +294,11 @@
       "id": "POL_003",
       "category": "UPSC_Polity",
       "difficulty": "medium",
-      "faithfulness": 0.3,
-      "answer_relevancy": 0.55,
+      "faithfulness": 0.9,
+      "answer_relevancy": 0.8500000000000001,
       "context_recall": 0.2,
-      "context_precision": 0.3822,
-      "ragas_score": 0.358
+      "context_precision": 0.746,
+      "ragas_score": 0.674
     },
     {
       "id": "POL_004",
@@ -314,41 +314,41 @@
       "id": "POL_005",
       "category": "UPSC_Polity",
       "difficulty": "hard",
-      "faithfulness": 0.3,
-      "answer_relevancy": 0.55,
+      "faithfulness": 0.9,
+      "answer_relevancy": 0.8500000000000001,
       "context_recall": 0.2,
-      "context_precision": 0.40249999999999997,
-      "ragas_score": 0.363
+      "context_precision": 0.7749999999999999,
+      "ragas_score": 0.681
     },
     {
       "id": "HIS_001",
       "category": "UPSC_History",
       "difficulty": "medium",
-      "faithfulness": 0.3,
-      "answer_relevancy": 0.55,
+      "faithfulness": 0.95,
+      "answer_relevancy": 0.9,
       "context_recall": 0.2,
-      "context_precision": 0.43889999999999996,
-      "ragas_score": 0.372
+      "context_precision": 0.974,
+      "ragas_score": 0.756
     },
     {
       "id": "HIS_002",
       "category": "UPSC_History",
       "difficulty": "medium",
-      "faithfulness": 0.3,
-      "answer_relevancy": 0.55,
+      "faithfulness": 0.9,
+      "answer_relevancy": 0.8500000000000001,
       "context_recall": 0.2,
-      "context_precision": 0.24779999999999996,
-      "ragas_score": 0.324
+      "context_precision": 0.654,
+      "ragas_score": 0.651
     },
     {
       "id": "HIS_003",
       "category": "UPSC_History",
       "difficulty": "medium",
-      "faithfulness": 0.3,
-      "answer_relevancy": 0.55,
+      "faithfulness": 0.9,
+      "answer_relevancy": 0.8500000000000001,
       "context_recall": 0.2,
-      "context_precision": 0.29329999999999995,
-      "ragas_score": 0.336
+      "context_precision": 0.7450000000000001,
+      "ragas_score": 0.674
     }
   ]
 }

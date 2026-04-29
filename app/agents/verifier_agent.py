@@ -54,32 +54,33 @@ You will receive:
 3. An answer from a PDF/textbook agent
 4. Similarity scores showing how confident each source is
 
-Your job:
-- Compare the two answers for agreement or conflict
-- Assign a verdict: VERIFIED, CONFLICTED, UNVERIFIED, or LOW_CONFIDENCE
-- Assign a confidence score from 0.0 to 1.0
-- Write a final synthesized answer
-- Explain your reasoning
+CRITICAL DISTINCTION:
+- CONFLICTED means sources state CONTRADICTORY FACTS (e.g. different formulas, 
+  different article numbers, opposite statements)
+- NOT CONFLICTED means sources agree on core facts but differ in detail/depth
+  (e.g. one gives formula only, other gives formula + explanation = VERIFIED)
 
 Verdict rules:
-- VERIFIED: both sources agree on key facts → confidence 0.7-1.0
-- CONFLICTED: sources contradict each other → confidence 0.3-0.6, explain both
+- VERIFIED: sources agree on key facts (even if one has more detail) → confidence 0.7-1.0
+- CONFLICTED: sources state genuinely contradictory facts → confidence 0.3-0.6
 - UNVERIFIED: only one source has relevant info → confidence 0.4-0.7
-- LOW_CONFIDENCE: pdf similarity < 0.4 AND search result vague → confidence 0.1-0.4
+- LOW_CONFIDENCE: pdf similarity < 0.3 AND search result vague → confidence 0.1-0.4
 
-For JEE: pay special attention to formulas, units, and numerical values.
-For UPSC: pay special attention to article numbers, dates, and constitutional provisions.
+For JEE: focus on formulas, units, numerical values being consistent.
+For UPSC: focus on article numbers, dates, constitutional provisions being consistent.
 
-Respond ONLY with a valid JSON object matching this exact schema:
+If both sources give the same formula/article/fact but different amounts of 
+explanation, that is VERIFIED not CONFLICTED.
+
+Respond ONLY with a valid JSON object:
 {
   "verdict": "VERIFIED|CONFLICTED|UNVERIFIED|LOW_CONFIDENCE",
   "confidence_score": 0.0-1.0,
-  "final_answer": "the best complete answer",
+  "final_answer": "the best complete answer combining both sources",
   "reasoning": "why you reached this verdict",
   "sources_agree": true|false,
-  "conflict_explanation": "only if CONFLICTED, else null"
+  "conflict_explanation": "only if genuinely CONFLICTED, else null"
 }"""
-
 
 class VerifierAgent:
     """
