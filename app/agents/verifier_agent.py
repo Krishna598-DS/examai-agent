@@ -7,6 +7,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from app.config import settings
 from app.logger import get_logger
 from app.exceptions import VerificationError
+import re
 
 logger = get_logger(__name__)
 
@@ -164,6 +165,11 @@ Verify these answers and respond with the JSON schema specified."""
                 lines = raw_content.split("\n")
                 # Remove first line (```json) and last line (```)
                 raw_content = "\n".join(lines[1:-1])
+            raw_content = re.sub(
+                r'\\(?!["\\/ bfnrtu])',
+                r'\\\\',
+                raw_content
+            )
 
             # Parse the JSON response
             result_data = json.loads(raw_content)

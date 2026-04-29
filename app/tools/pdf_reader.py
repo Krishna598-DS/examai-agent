@@ -54,8 +54,8 @@ def clean_pdf_text(text: str) -> str:
 
 def chunk_text(
     pages: List[dict],
-    chunk_size: int = 500,
-    chunk_overlap: int = 50
+    chunk_size: int = 800,
+    chunk_overlap: int = 100
 ) -> List[PDFChunk]:
     chunks = []
     chunk_index = 0

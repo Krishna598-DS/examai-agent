@@ -1,19 +1,19 @@
 {
   "overall": {
-    "faithfulness": 0.416,
-    "answer_relevancy": 0.56,
+    "faithfulness": 0.52,
+    "answer_relevancy": 0.67,
     "context_recall": 0.2,
-    "context_precision": 0.28,
-    "ragas_score": 0.364,
+    "context_precision": 0.459,
+    "ragas_score": 0.462,
     "n": 10
   },
   "by_category": {
-    "JEE_Physics": 0.364
+    "JEE_Physics": 0.462
   },
   "by_difficulty": {
-    "easy": 0.433,
-    "medium": 0.318,
-    "hard": 0.318
+    "easy": 0.458,
+    "medium": 0.422,
+    "hard": 0.55
   },
   "per_question": [
     {
@@ -23,8 +23,8 @@
       "faithfulness": 1.0,
       "answer_relevancy": 0.9500000000000001,
       "context_recall": 0.2,
-      "context_precision": 0.9319999999999999,
-      "ragas_score": 0.771
+      "context_precision": 0.901,
+      "ragas_score": 0.763
     },
     {
       "id": "PHY_002",
@@ -33,8 +33,8 @@
       "faithfulness": 0.3,
       "answer_relevancy": 0.55,
       "context_recall": 0.2,
-      "context_precision": 0.3968999999999999,
-      "ragas_score": 0.362
+      "context_precision": 0.3745,
+      "ragas_score": 0.356
     },
     {
       "id": "PHY_003",
@@ -43,78 +43,78 @@
       "faithfulness": 0.3,
       "answer_relevancy": 0.55,
       "context_recall": 0.2,
-      "context_precision": 0.385,
-      "ragas_score": 0.359
+      "context_precision": 0.3836,
+      "ragas_score": 0.358
     },
     {
       "id": "PHY_004",
       "category": "JEE_Physics",
       "difficulty": "medium",
-      "faithfulness": 0.4,
+      "faithfulness": 0.3,
       "answer_relevancy": 0.55,
       "context_recall": 0.2,
-      "context_precision": 0.21760000000000002,
-      "ragas_score": 0.342
+      "context_precision": 0.1925,
+      "ragas_score": 0.311
     },
     {
       "id": "PHY_005",
       "category": "JEE_Physics",
       "difficulty": "medium",
-      "faithfulness": 0.4,
-      "answer_relevancy": 0.55,
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9500000000000001,
       "context_recall": 0.2,
-      "context_precision": 0.1152,
-      "ragas_score": 0.316
+      "context_precision": 0.7170000000000001,
+      "ragas_score": 0.717
     },
     {
       "id": "PHY_006",
       "category": "JEE_Physics",
       "difficulty": "medium",
-      "faithfulness": 0.32000000000000006,
-      "answer_relevancy": 0.45,
+      "faithfulness": 0.3,
+      "answer_relevancy": 0.55,
       "context_recall": 0.2,
-      "context_precision": 0.31120000000000003,
-      "ragas_score": 0.32
+      "context_precision": 0.34369999999999995,
+      "ragas_score": 0.348
     },
     {
       "id": "PHY_007",
       "category": "JEE_Physics",
       "difficulty": "medium",
-      "faithfulness": 0.32000000000000006,
-      "answer_relevancy": 0.45,
+      "faithfulness": 0.3,
+      "answer_relevancy": 0.55,
       "context_recall": 0.2,
-      "context_precision": 0.1976,
-      "ragas_score": 0.292
+      "context_precision": 0.20509999999999998,
+      "ragas_score": 0.314
     },
     {
       "id": "PHY_008",
       "category": "JEE_Physics",
       "difficulty": "easy",
-      "faithfulness": 0.32000000000000006,
-      "answer_relevancy": 0.45,
+      "faithfulness": 0.4,
+      "answer_relevancy": 0.55,
       "context_recall": 0.2,
-      "context_precision": 0.0,
-      "ragas_score": 0.242
+      "context_precision": 0.272,
+      "ragas_score": 0.356
     },
     {
       "id": "PHY_009",
       "category": "JEE_Physics",
       "difficulty": "hard",
-      "faithfulness": 0.4,
-      "answer_relevancy": 0.55,
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.9500000000000001,
       "context_recall": 0.2,
-      "context_precision": 0.13520000000000001,
-      "ragas_score": 0.321
+      "context_precision": 0.8680000000000001,
+      "ragas_score": 0.755
     },
     {
       "id": "PHY_010",
       "category": "JEE_Physics",
       "difficulty": "hard",
-      "faithfulness": 0.4,
+      "faithfulness": 0.3,
       "answer_relevancy": 0.55,
       "context_recall": 0.2,
-      "context_precision": 0.10960000000000002,
-      "ragas_score": 0.315
+      "context_precision": 0.3283,
+      "ragas_score": 0.345
     }
   ]
 }

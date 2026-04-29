@@ -3,37 +3,37 @@
     "total_questions": 10,
     "successful": 10,
     "errors": 0,
-    "eval_duration_seconds": 266.85,
+    "eval_duration_seconds": 182.7,
     "verdicts": {
-      "VERIFIED": 1,
-      "CONFLICTED": 2,
-      "UNVERIFIED": 7
+      "VERIFIED": 3,
+      "CONFLICTED": 6,
+      "UNVERIFIED": 1
     },
-    "verification_rate": 0.1,
-    "avg_confidence_score": 0.51,
-    "high_confidence_rate": 0.1,
-    "avg_latency_seconds": 24.88,
+    "verification_rate": 0.3,
+    "avg_confidence_score": 0.62,
+    "high_confidence_rate": 0.3,
+    "avg_latency_seconds": 16.46,
     "cache_hit_rate": 0.0,
     "by_category": {
       "JEE_Physics": {
         "total": 10,
-        "verified": 1,
-        "avg_confidence": 0.51,
-        "verification_rate": 0.1
+        "verified": 3,
+        "avg_confidence": 0.62,
+        "verification_rate": 0.3
       }
     },
     "by_difficulty": {
       "easy": {
         "total": 4,
-        "avg_confidence": 0.575
+        "avg_confidence": 0.6
       },
       "medium": {
         "total": 4,
-        "avg_confidence": 0.45
+        "avg_confidence": 0.6
       },
       "hard": {
         "total": 2,
-        "avg_confidence": 0.5
+        "avg_confidence": 0.7
       }
     }
   },
@@ -48,13 +48,13 @@
       "verdict": "VERIFIED",
       "confidence_score": 0.9,
       "from_cache": false,
-      "pipeline_duration_seconds": 13.58,
+      "pipeline_duration_seconds": 13.51,
       "agents_used": [
         "search",
         "pdf",
         "verifier"
       ],
-      "pdf_similarity": 0.732,
+      "pdf_similarity": 0.701,
       "sources_agree": true,
       "error": null
     },
@@ -64,17 +64,17 @@
       "difficulty": "easy",
       "question": "What is the work-energy theorem?",
       "ground_truth": "The work-energy theorem states that the work done by the net force on an object equals the change in its kinetic energy. W = delta KE = (1/2)mv^2 - (1/2)mu^2.",
-      "generated_answer": "The Work-Energy Theorem states that the total work done by all forces acting on an object is equal to the change in its kinetic energy, expressed as W = K_f - K_i. It can also be expressed in terms of initial and final velocities as W = (1/2)mv^2 - (1/2)mu^2.",
+      "generated_answer": "The Work-Energy Theorem states that the net work done on an object is equal to the change in its kinetic energy, expressed as W = \u0394KE = K_f - K_i. This can also be represented as W = (1/2)mv\u00b2 - (1/2)mu\u00b2, where W is the work done, m is the mass, v is the final velocity, and u is the initial velocity.",
       "verdict": "CONFLICTED",
       "confidence_score": 0.5,
       "from_cache": false,
-      "pipeline_duration_seconds": 14.59,
+      "pipeline_duration_seconds": 15.92,
       "agents_used": [
         "search",
         "pdf",
         "verifier"
       ],
-      "pdf_similarity": 0.567,
+      "pdf_similarity": 0.535,
       "sources_agree": false,
       "error": null
     },
@@ -88,13 +88,13 @@
       "verdict": "CONFLICTED",
       "confidence_score": 0.5,
       "from_cache": false,
-      "pipeline_duration_seconds": 6.81,
+      "pipeline_duration_seconds": 8.11,
       "agents_used": [
         "search",
         "pdf",
         "verifier"
       ],
-      "pdf_similarity": 0.55,
+      "pdf_similarity": 0.548,
       "sources_agree": false,
       "error": null
     },
@@ -104,17 +104,17 @@
       "difficulty": "medium",
       "question": "What is Ohm's law and what are its limitations?",
       "ground_truth": "Ohm's law states V = IR where V is voltage, I is current, and R is resistance. Limitations: it does not apply to semiconductors, electrolytes, vacuum tubes, and non-linear devices where resistance changes with temperature or voltage.",
-      "generated_answer": "Ohm's Law states that the current flowing through a conductor between two points is directly proportional to the voltage across the two points, expressed as V = I \u00d7 R. Its limitations include applicability only to ohmic materials, temperature dependence, frequency dependence, high voltage and current conditions, and complexity in circuits with reactive components.",
-      "verdict": "UNVERIFIED",
+      "generated_answer": "Ohm's Law states that the voltage (V) across a conductor is directly proportional to the current (I) flowing through it, with the resistance (R) being the constant of proportionality, expressed mathematically as V = I \u00d7 R. The limitations of Ohm's Law include its inapplicability to non-ohmic materials (like semiconductors and thermistors), temperature dependence, frequency dependence in AC circuits, and the behavior of materials under high voltage and current conditions.",
+      "verdict": "CONFLICTED",
       "confidence_score": 0.5,
       "from_cache": false,
-      "pipeline_duration_seconds": 18.08,
+      "pipeline_duration_seconds": 17.24,
       "agents_used": [
         "search",
         "pdf",
         "verifier"
       ],
-      "pdf_similarity": 0.272,
+      "pdf_similarity": 0.275,
       "sources_agree": false,
       "error": null
     },
@@ -124,18 +124,18 @@
       "difficulty": "medium",
       "question": "What is the principle of superposition of waves?",
       "ground_truth": "When two or more waves overlap, the resultant displacement at any point is the algebraic sum of the displacements of each wave at that point. This leads to constructive interference when waves are in phase and destructive interference when out of phase.",
-      "generated_answer": "The principle of superposition of waves states that when two or more waves overlap in a medium, the resultant displacement at any point is equal to the algebraic sum of the individual displacements caused by each wave at that point. This principle applies to linear systems and is fundamental in understanding wave interference.",
-      "verdict": "UNVERIFIED",
-      "confidence_score": 0.5,
+      "generated_answer": "The principle of superposition of waves states that when two or more waves overlap in a medium, the resultant displacement at any point is equal to the algebraic sum of the individual displacements caused by each wave at that point. This principle applies to linear systems and is fundamental in understanding wave interference. Mathematically, if two waves are represented as \\( y_1(x, t) \\) and \\( y_2(x, t) \\), the resultant wave \\( y(x, t) \\) can be expressed as \\( y(x, t) = y_1(x, t) + y_2(x, t) \\). This principle is crucial in various phenomena such as interference, where waves can constructively or destructively interfere with each other, leading to patterns of maximum and minimum intensity.",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.9,
       "from_cache": false,
-      "pipeline_duration_seconds": 12.95,
+      "pipeline_duration_seconds": 15.75,
       "agents_used": [
         "search",
         "pdf",
         "verifier"
       ],
-      "pdf_similarity": 0.144,
-      "sources_agree": false,
+      "pdf_similarity": 0.517,
+      "sources_agree": true,
       "error": null
     },
     {
@@ -144,17 +144,17 @@
       "difficulty": "medium",
       "question": "Define simple harmonic motion and give its equation.",
       "ground_truth": "Simple harmonic motion is a type of periodic motion where the restoring force is proportional to displacement and directed toward the equilibrium position. Equation: x = A sin(wt + phi) where A is amplitude, w is angular frequency, and phi is phase constant.",
-      "generated_answer": "Simple Harmonic Motion (SHM) is a type of periodic motion where the restoring force is directly proportional to the displacement from the equilibrium position. The equations associated with SHM include: 1. Displacement: x(t) = A cos(\u03c9t + \u03c6), 2. Acceleration: a(t) = -\u03c9\u00b2x(t), 3. Velocity: v(t) = -A\u03c9 sin(\u03c9t + \u03c6).",
-      "verdict": "UNVERIFIED",
-      "confidence_score": 0.4,
+      "generated_answer": "Simple Harmonic Motion (SHM) is a type of periodic motion where the restoring force is proportional to the displacement from the equilibrium position. The equation of motion can be expressed as either \\( x(t) = A \\cos(\\omega t + \\phi) \\) or \\( x = A \\sin(\\omega t + \\phi) \\), depending on the phase of the motion. The period \\( T \\) of SHM is given by \\( T = 2\\pi \\sqrt{\frac{m}{k}} \\).",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
       "from_cache": false,
-      "pipeline_duration_seconds": 45.97,
+      "pipeline_duration_seconds": 14.07,
       "agents_used": [
         "search",
         "pdf",
         "verifier"
       ],
-      "pdf_similarity": 0.389,
+      "pdf_similarity": 0.491,
       "sources_agree": false,
       "error": null
     },
@@ -164,17 +164,17 @@
       "difficulty": "medium",
       "question": "What is Bernoulli's principle?",
       "ground_truth": "Bernoulli's principle states that for a streamlined flow of fluid, an increase in speed occurs simultaneously with a decrease in pressure. Equation: P + (1/2)pv^2 + pgh = constant, where P is pressure, p is density, v is velocity, g is gravity, h is height.",
-      "generated_answer": "Bernoulli's principle is a fundamental concept in fluid dynamics that describes the relationship between the speed of a fluid and its pressure. It states that in a steady flow of an incompressible fluid, an increase in the fluid's velocity occurs simultaneously with a decrease in pressure or potential energy. The principle can be expressed in the form of Bernoulli's equation: P + (1/2)\u03c1v\u00b2 + \u03c1gh = constant, where P is pressure energy per unit volume, \u03c1 is the fluid density, v is flow velocity, g is acceleration due to gravity, and h is height above a reference level.",
-      "verdict": "UNVERIFIED",
-      "confidence_score": 0.4,
+      "generated_answer": "Bernoulli's principle states that for streamlined fluid flow, the sum of pressure (P), half the product of density (rho) and velocity squared (v squared), and the product of density (rho) and height (h) is constant. This implies that faster flow results in lower pressure. It has applications in various fields, including the generation of lift in aircraft wings and the functioning of carburetors.",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
       "from_cache": false,
-      "pipeline_duration_seconds": 58.99,
+      "pipeline_duration_seconds": 15.0,
       "agents_used": [
         "search",
         "pdf",
         "verifier"
       ],
-      "pdf_similarity": 0.247,
+      "pdf_similarity": 0.293,
       "sources_agree": false,
       "error": null
     },
@@ -184,17 +184,17 @@
       "difficulty": "easy",
       "question": "What is Coulomb's law?",
       "ground_truth": "Coulomb's law states that the electrostatic force between two point charges is directly proportional to the product of their charges and inversely proportional to the square of the distance between them. F = k*q1*q2/r^2 where k = 9x10^9 Nm^2/C^2.",
-      "generated_answer": "Coulomb's Law describes the electrostatic force between two charged objects, stating that the force is directly proportional to the product of the charges and inversely proportional to the square of the distance between them. The mathematical expression is F = k |q1 * q2| / r^2, where k is Coulomb's constant.",
+      "generated_answer": "Coulomb's Law describes the electrostatic force between two charged objects, stating that the force is directly proportional to the product of the magnitudes of the charges and inversely proportional to the square of the distance between them. The formula is F = k |q1 * q2| / r^2, where F is the force, k is Coulomb's constant, q1 and q2 are the charges, and r is the distance between them.",
       "verdict": "UNVERIFIED",
-      "confidence_score": 0.4,
+      "confidence_score": 0.5,
       "from_cache": false,
-      "pipeline_duration_seconds": 44.01,
+      "pipeline_duration_seconds": 33.86,
       "agents_used": [
         "search",
         "pdf",
         "verifier"
       ],
-      "pdf_similarity": 0.0,
+      "pdf_similarity": 0.34,
       "sources_agree": false,
       "error": null
     },
@@ -204,18 +204,18 @@
       "difficulty": "hard",
       "question": "Explain the photoelectric effect.",
       "ground_truth": "The photoelectric effect is the emission of electrons from a metal surface when light of sufficient frequency shines on it. Key observations: emission is instantaneous, depends on frequency not intensity, and each metal has a threshold frequency below which no emission occurs. Explained by Einstein using photon theory: E = hf.",
-      "generated_answer": "The photoelectric effect is a phenomenon where electrons are emitted from a material, typically a metal, when it is exposed to electromagnetic radiation, such as light. Key concepts include the emission of electrons when light of sufficient frequency strikes a metal surface, the existence of a threshold frequency, the photon concept where light is treated as particles, and the kinetic energy of emitted electrons expressed by the equation KE = h\u03bd - \u03c6. The effect was first observed by Heinrich Hertz and explained by Albert Einstein.",
-      "verdict": "UNVERIFIED",
-      "confidence_score": 0.5,
+      "generated_answer": "The photoelectric effect is a phenomenon where electrons are emitted from a material, typically a metal, when it is exposed to electromagnetic radiation, such as light. A minimum frequency, known as the threshold frequency, is required for this emission to occur. The energy of the emitted electrons can be described by the equation E = hf, where h is Planck's constant and f is the frequency of the incident light. According to Einstein's explanation using photon theory, the kinetic energy of the emitted electrons is given by the equation: Kinetic energy = hf - work function. Importantly, no emission of electrons occurs below the threshold frequency, regardless of the intensity of the light.",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.9,
       "from_cache": false,
-      "pipeline_duration_seconds": 17.38,
+      "pipeline_duration_seconds": 14.04,
       "agents_used": [
         "search",
         "pdf",
         "verifier"
       ],
-      "pdf_similarity": 0.169,
-      "sources_agree": false,
+      "pdf_similarity": 0.668,
+      "sources_agree": true,
       "error": null
     },
     {
@@ -224,17 +224,17 @@
       "difficulty": "hard",
       "question": "What is the Heisenberg uncertainty principle?",
       "ground_truth": "The Heisenberg uncertainty principle states that it is impossible to simultaneously measure both the position and momentum of a particle with perfect accuracy. delta_x * delta_p >= h/4pi, where h is Planck's constant. This is a fundamental property of quantum systems, not a measurement limitation.",
-      "generated_answer": "The Heisenberg Uncertainty Principle is a fundamental concept in quantum mechanics that states there is a limit to the precision with which certain pairs of physical properties, such as position and momentum, can be simultaneously known. Mathematically, it is expressed as \u03c3_x \u03c3_p \u2265 \u0127/2, where \u03c3_x is the standard deviation of position, \u03c3_p is the standard deviation of momentum, and \u0127 is the reduced Planck constant.",
-      "verdict": "UNVERIFIED",
+      "generated_answer": "The Heisenberg Uncertainty Principle states that it is impossible to simultaneously measure the position and momentum of a particle with perfect accuracy. Mathematically, it is expressed as \u03c3_x \u03c3_p \u2265 \u0127/2 in the web search answer and as \u0394x \u0394p \u2265 h/(4\u03c0) in the PDF answer. Both expressions convey the same fundamental concept but differ in their constants and mathematical representation. The principle also applies to energy and time, which is mentioned in the PDF.",
+      "verdict": "CONFLICTED",
       "confidence_score": 0.5,
       "from_cache": false,
-      "pipeline_duration_seconds": 16.41,
+      "pipeline_duration_seconds": 17.12,
       "agents_used": [
         "search",
         "pdf",
         "verifier"
       ],
-      "pdf_similarity": 0.137,
+      "pdf_similarity": 0.469,
       "sources_agree": false,
       "error": null
     }
