@@ -2,7 +2,7 @@
 import asyncio
 import time
 from contextlib import asynccontextmanager
-
+from app.tools.cache import redis_cache
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.routes import router
@@ -31,10 +31,12 @@ async def lifespan(app: FastAPI):
         env=settings.env,
         debug=settings.debug,
     )
+    # Connect to Redis
+    await redis_cache.connect()
     yield
     # Shutdown
+    await redis_cache.disconnect()
     logger.info("server_stopping", app=settings.app_name)
-
 
 app = FastAPI(
     title=settings.app_name,

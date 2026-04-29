@@ -1,106 +1,60 @@
 # app/orchestrator/graph.py
 import asyncio
-import json
 import time
-import hashlib
 from typing import Optional
 from app.agents.search_agent import search_agent
 from app.agents.pdf_agent import pdf_agent
 from app.agents.verifier_agent import verifier_agent
+from app.tools.cache import redis_cache
 from app.config import settings
 from app.logger import get_logger
 from app.exceptions import AgentError
 
 logger = get_logger(__name__)
 
-# Sentinel object to distinguish "cache miss" from cached None
-_CACHE_MISS = object()
-
 
 class ExamAIOrchestrator:
     """
     Central coordinator for the multi-agent system.
 
-    Responsibilities:
-    1. Cache lookup — answer immediately if seen recently
-    2. Parallel execution — run search + PDF agents concurrently
-    3. Graceful degradation — handle individual agent failures
-    4. Verification — cross-check answers for confidence scoring
-    5. Self-correction — retry with reformulated query if needed
-    6. Cache storage — save verified answer for future requests
-    7. Metadata — track which agents ran, timings, cache hits
-
-    This is the only entry point for the system. All other agents
-    are implementation details — callers only talk to the orchestrator.
+    Caching strategy:
+    - Primary: Redis (shared, persistent, TTL-managed)
+    - Fallback: in-memory dict (if Redis unavailable)
+    Both are checked/written transparently.
     """
 
     def __init__(self):
-        # In-memory cache for development
-        # In production this would be Redis (we'll add that in Day 14)
-        # Key: question hash, Value: cached result dict
-        self._cache: dict = {}
-        # Track when each cache entry was stored
-        self._cache_timestamps: dict = {}
+        # Fallback in-memory cache when Redis is unavailable
+        self._memory_cache: dict = {}
+        self._memory_timestamps: dict = {}
         logger.info("orchestrator_initialized")
 
-    def _get_cache_key(self, question: str) -> str:
-        """
-        Generate a cache key from a question.
+    def _get_from_memory(self, question: str) -> Optional[dict]:
+        """Check in-memory fallback cache."""
+        import hashlib
+        key = hashlib.md5(question.lower().strip().encode()).hexdigest()
 
-        Why hash? Cache keys should be:
-        1. Short (hashes are fixed length)
-        2. Consistent (same question = same hash)
-        3. Safe for use as dict keys
+        if key not in self._memory_cache:
+            return None
 
-        We lowercase and strip whitespace first so
-        "What is F=ma?" and "what is f=ma ?" hit the same cache entry.
-        """
-        normalized = question.lower().strip()
-        return hashlib.md5(normalized.encode()).hexdigest()
+        age = time.time() - self._memory_timestamps.get(key, 0)
+        if age > settings.cache_ttl_seconds:
+            del self._memory_cache[key]
+            del self._memory_timestamps[key]
+            return None
 
-    def _get_from_cache(self, question: str) -> object:
-        """
-        Check cache for a previously answered question.
-        Returns _CACHE_MISS if not found or expired.
-        """
-        key = self._get_cache_key(question)
+        return self._memory_cache[key]
 
-        if key not in self._cache:
-            return _CACHE_MISS
-
-        # Check if cache entry has expired
-        stored_at = self._cache_timestamps.get(key, 0)
-        age_seconds = time.time() - stored_at
-
-        if age_seconds > settings.cache_ttl_seconds:
-            # Expired — remove and return miss
-            del self._cache[key]
-            del self._cache_timestamps[key]
-            logger.info("cache_expired", age_seconds=round(age_seconds))
-            return _CACHE_MISS
-
-        logger.info(
-            "cache_hit",
-            age_seconds=round(age_seconds),
-            question=question[:50]
-        )
-        return self._cache[key]
-
-    def _store_in_cache(self, question: str, result: dict) -> None:
-        """Store a result in cache with current timestamp."""
-        # Only cache high-confidence results
-        # Don't cache LOW_CONFIDENCE answers — they might be wrong
+    def _store_in_memory(self, question: str, result: dict):
+        """Store in in-memory fallback cache."""
+        import hashlib
         if result.get("confidence_score", 0) < 0.5:
-            logger.info("cache_skip_low_confidence",
-                       confidence=result.get("confidence_score"))
             return
+        key = hashlib.md5(question.lower().strip().encode()).hexdigest()
+        self._memory_cache[key] = result
+        self._memory_timestamps[key] = time.time()
 
-        key = self._get_cache_key(question)
-        self._cache[key] = result
-        self._cache_timestamps[key] = time.time()
-        logger.info("cache_stored", question=question[:50])
-
-    async def _run_search_agent(self, question: str) -> Optional[dict]:
+    async def _run_search_agent(self, question: str) -> dict:
         """Run search agent with error isolation."""
         try:
             result = await search_agent.run(question)
@@ -109,8 +63,6 @@ class ExamAIOrchestrator:
             return result
         except Exception as e:
             logger.error("search_agent_failed", error=str(e))
-            # Return a structured failure — not None, not an exception
-            # The orchestrator needs to handle this gracefully
             return {
                 "answer": f"Web search unavailable: {str(e)}",
                 "agent": "search",
@@ -119,7 +71,7 @@ class ExamAIOrchestrator:
                 "question": question,
             }
 
-    async def _run_pdf_agent(self, question: str) -> Optional[dict]:
+    async def _run_pdf_agent(self, question: str) -> dict:
         """Run PDF agent with error isolation."""
         try:
             result = await pdf_agent.run(question)
@@ -142,45 +94,42 @@ class ExamAIOrchestrator:
 
     async def run(self, question: str) -> dict:
         """
-        Main entry point. Orchestrates all agents to answer a question.
-
-        Flow:
-        1. Check cache
-        2. Run search + PDF concurrently
-        3. Verify results
-        4. Self-correct if needed
+        Main orchestration entry point.
+        1. Redis cache check
+        2. Memory cache fallback
+        3. Run agents concurrently
+        4. Verify + self-correct
         5. Cache result
-        6. Return with metadata
-
-        Args:
-            question: The JEE or UPSC question to answer
-
-        Returns:
-            Verified, confidence-scored answer with full metadata
         """
         pipeline_start = time.time()
-
         logger.info("orchestrator_run_started", question=question[:100])
 
-        # Step 1: Cache check
-        cached = self._get_from_cache(question)
-        if cached is not _CACHE_MISS:
+        # Step 1: Check Redis cache
+        cached = await redis_cache.get(question)
+        if cached:
             cached["from_cache"] = True
+            cached["cache_backend"] = "redis"
             cached["cache_latency_ms"] = round(
                 (time.time() - pipeline_start) * 1000, 2
             )
             return cached
 
-        # Step 2: Run search and PDF agents CONCURRENTLY
-        # asyncio.gather runs both at the same time
-        # Total time = max(search_time, pdf_time) not search_time + pdf_time
-        agent_start = time.time()
+        # Step 2: Check memory fallback cache
+        cached = self._get_from_memory(question)
+        if cached:
+            cached["from_cache"] = True
+            cached["cache_backend"] = "memory"
+            cached["cache_latency_ms"] = round(
+                (time.time() - pipeline_start) * 1000, 2
+            )
+            return cached
 
+        # Step 3: Run agents concurrently
+        agent_start = time.time()
         search_result, pdf_result = await asyncio.gather(
             self._run_search_agent(question),
             self._run_pdf_agent(question),
         )
-
         agent_duration = round(time.time() - agent_start, 2)
 
         search_failed = search_result.get("failed", False)
@@ -193,39 +142,38 @@ class ExamAIOrchestrator:
             pdf_failed=pdf_failed,
         )
 
-        # Step 3: Handle complete failure
+        # Step 4: Handle complete failure
         if search_failed and pdf_failed:
-            logger.error("all_agents_failed", question=question[:100])
             return {
                 "question": question,
                 "verdict": "ERROR",
                 "confidence_score": 0.0,
-                "final_answer": "Both search and PDF agents failed. Please try again.",
+                "final_answer": "Both agents failed. Please try again.",
                 "reasoning": "All agents unavailable",
                 "sources_agree": False,
                 "from_cache": False,
                 "agents_used": [],
-                "pipeline_duration_seconds": round(time.time() - pipeline_start, 2),
+                "pipeline_duration_seconds": round(
+                    time.time() - pipeline_start, 2
+                ),
             }
 
-        # Step 4: Verify results
-        # Even if one agent failed, we can still verify with the other
+        # Step 5: Verify
         verified = await verifier_agent.verify(
             question=question,
             search_result=search_result,
             pdf_result=pdf_result,
         )
 
-        # Step 5: Self-correct if confidence is low
+        # Step 6: Self-correct if needed
         final = await verifier_agent.self_correct(
             question=question,
             initial_result=verified,
             retry_search_func=lambda q: self._run_search_agent(q),
         )
 
-        # Step 6: Build final response with metadata
+        # Step 7: Build metadata
         pipeline_duration = round(time.time() - pipeline_start, 2)
-
         agents_used = []
         if not search_failed:
             agents_used.append("search")
@@ -235,6 +183,7 @@ class ExamAIOrchestrator:
 
         final.update({
             "from_cache": False,
+            "cache_backend": None,
             "agents_used": agents_used,
             "agent_duration_seconds": agent_duration,
             "pipeline_duration_seconds": pipeline_duration,
@@ -242,24 +191,22 @@ class ExamAIOrchestrator:
             "pdf_failed": pdf_failed,
         })
 
-        # Step 7: Cache the result if confidence is good
-        self._store_in_cache(question, final)
+        # Step 8: Store in both caches
+        await redis_cache.set(question, final)
+        self._store_in_memory(question, final)
 
         logger.info(
             "orchestrator_run_completed",
             verdict=final.get("verdict"),
             confidence=final.get("confidence_score"),
             pipeline_duration=pipeline_duration,
-            agents_used=agents_used,
-            from_cache=False,
         )
 
         return final
 
     def get_stats(self) -> dict:
-        """Return orchestrator statistics."""
         return {
-            "cache_size": len(self._cache),
+            "memory_cache_size": len(self._memory_cache),
             "cache_ttl_seconds": settings.cache_ttl_seconds,
         }
 

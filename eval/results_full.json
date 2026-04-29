@@ -1,0 +1,726 @@
+{
+  "summary": {
+    "total_questions": 33,
+    "successful": 33,
+    "errors": 0,
+    "eval_duration_seconds": 803.41,
+    "verdicts": {
+      "VERIFIED": 15,
+      "CONFLICTED": 16,
+      "UNVERIFIED": 2
+    },
+    "verification_rate": 0.455,
+    "avg_confidence_score": 0.644,
+    "high_confidence_rate": 0.455,
+    "avg_latency_seconds": 22.4,
+    "cache_hit_rate": 0.0,
+    "by_category": {
+      "JEE_Physics": {
+        "total": 10,
+        "verified": 4,
+        "avg_confidence": 0.635,
+        "verification_rate": 0.4
+      },
+      "JEE_Chemistry": {
+        "total": 10,
+        "verified": 6,
+        "avg_confidence": 0.68,
+        "verification_rate": 0.6
+      },
+      "JEE_Math": {
+        "total": 5,
+        "verified": 3,
+        "avg_confidence": 0.68,
+        "verification_rate": 0.6
+      },
+      "UPSC_Polity": {
+        "total": 5,
+        "verified": 2,
+        "avg_confidence": 0.64,
+        "verification_rate": 0.4
+      },
+      "UPSC_History": {
+        "total": 3,
+        "verified": 0,
+        "avg_confidence": 0.5,
+        "verification_rate": 0.0
+      }
+    },
+    "by_difficulty": {
+      "easy": {
+        "total": 11,
+        "avg_confidence": 0.718
+      },
+      "medium": {
+        "total": 17,
+        "avg_confidence": 0.6
+      },
+      "hard": {
+        "total": 5,
+        "avg_confidence": 0.63
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "PHY_001",
+      "category": "JEE_Physics",
+      "difficulty": "easy",
+      "question": "What is Newton's second law of motion and what is its formula?",
+      "ground_truth": "Newton's second law states that the net force on an object equals its mass times acceleration. Formula: F = ma, where F is force in Newtons, m is mass in kg, and a is acceleration in m/s squared.",
+      "generated_answer": "Newton's second law of motion states that the acceleration of an object is directly proportional to the net force acting on it and inversely proportional to its mass. This law can be expressed mathematically with the formula: F = ma, where F is the net force (in Newtons), m is the mass (in kilograms), and a is the acceleration (in meters per second squared).",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.9,
+      "from_cache": false,
+      "pipeline_duration_seconds": 12.99,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.701,
+      "sources_agree": true,
+      "error": null
+    },
+    {
+      "id": "PHY_002",
+      "category": "JEE_Physics",
+      "difficulty": "easy",
+      "question": "What is the work-energy theorem?",
+      "ground_truth": "The work-energy theorem states that the work done by the net force on an object equals the change in its kinetic energy. W = delta KE = (1/2)mv^2 - (1/2)mu^2.",
+      "generated_answer": "The Work-Energy Theorem states that the net work done on an object is equal to the change in its kinetic energy, expressed as W = \u0394KE = K_f - K_i. This can also be represented as W = (1/2)mv\u00b2 - (1/2)mu\u00b2, where W is the work done, m is the mass, v is the final velocity, and u is the initial velocity.",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 18.29,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.535,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "PHY_003",
+      "category": "JEE_Physics",
+      "difficulty": "easy",
+      "question": "State the law of conservation of energy.",
+      "ground_truth": "Energy can neither be created nor destroyed, only converted from one form to another. The total mechanical energy of a system equals kinetic energy plus potential energy and remains constant in the absence of non-conservative forces.",
+      "generated_answer": "The law of conservation of energy states that energy cannot be created or destroyed in an isolated system; it can only be transformed from one form to another or transferred from one object to another. The total energy of an isolated system remains constant over time. In mathematical terms, if \\( E_{\text{initial}} \\) is the total energy at the beginning and \\( E_{\text{final}} \\) is the total energy at the end, then \\( E_{\text{initial}} = E_{\text{final}} \\). This principle applies to various processes, including mechanical, thermal, and chemical systems.",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.8,
+      "from_cache": false,
+      "pipeline_duration_seconds": 12.81,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.548,
+      "sources_agree": true,
+      "error": null
+    },
+    {
+      "id": "PHY_004",
+      "category": "JEE_Physics",
+      "difficulty": "medium",
+      "question": "What is Ohm's law and what are its limitations?",
+      "ground_truth": "Ohm's law states V = IR where V is voltage, I is current, and R is resistance. Limitations: it does not apply to semiconductors, electrolytes, vacuum tubes, and non-linear devices where resistance changes with temperature or voltage.",
+      "generated_answer": "Ohm's Law states that the voltage (V) across a conductor is directly proportional to the current (I) flowing through it, with the resistance (R) being the constant of proportionality, expressed mathematically as V = IR. The limitations of Ohm's Law include its inapplicability to non-ohmic conductors such as semiconductors and electrolytes, temperature dependence, frequency dependence in AC circuits, and the behavior of materials at high voltages and currents.",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 27.61,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.275,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "PHY_005",
+      "category": "JEE_Physics",
+      "difficulty": "medium",
+      "question": "What is the principle of superposition of waves?",
+      "ground_truth": "When two or more waves overlap, the resultant displacement at any point is the algebraic sum of the displacements of each wave at that point. This leads to constructive interference when waves are in phase and destructive interference when out of phase.",
+      "generated_answer": "The principle of superposition of waves states that when two or more waves overlap in a medium, the resultant displacement at any point is equal to the algebraic sum of the individual displacements caused by each wave at that point. This principle applies to linear systems and is fundamental in understanding wave interference. Mathematically, if two waves are represented as \\( y_1(x, t) \\) and \\( y_2(x, t) \\), the resultant wave \\( y(x, t) \\) can be expressed as: \\( y(x, t) = y_1(x, t) + y_2(x, t) \\). This principle is crucial in various phenomena such as interference, where waves can constructively or destructively interfere with each other.",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.8,
+      "from_cache": false,
+      "pipeline_duration_seconds": 17.89,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.517,
+      "sources_agree": true,
+      "error": null
+    },
+    {
+      "id": "PHY_006",
+      "category": "JEE_Physics",
+      "difficulty": "medium",
+      "question": "Define simple harmonic motion and give its equation.",
+      "ground_truth": "Simple harmonic motion is a type of periodic motion where the restoring force is proportional to displacement and directed toward the equilibrium position. Equation: x = A sin(wt + phi) where A is amplitude, w is angular frequency, and phi is phase constant.",
+      "generated_answer": "Simple Harmonic Motion (SHM) is a type of periodic motion where the restoring force is proportional to the displacement from the equilibrium position. The displacement can be expressed as either \\( x(t) = A \\cos(\\omega t + \\phi) \\) or \\( x = A \\sin(\\omega t + \\phi) \\), depending on the initial conditions. The period \\( T \\) of SHM is given by \\( T = 2\\pi \\sqrt{\frac{m}{k}} \\).",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 24.42,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.491,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "PHY_007",
+      "category": "JEE_Physics",
+      "difficulty": "medium",
+      "question": "What is Bernoulli's principle?",
+      "ground_truth": "Bernoulli's principle states that for a streamlined flow of fluid, an increase in speed occurs simultaneously with a decrease in pressure. Equation: P + (1/2)pv^2 + pgh = constant, where P is pressure, p is density, v is velocity, g is gravity, h is height.",
+      "generated_answer": "Bernoulli's principle states that for streamlined fluid flow, the sum of pressure (P), half the product of density (rho) and the square of velocity (v squared), and the product of density (rho) and height (h) is constant. This implies that faster flow results in lower pressure. It is often expressed in the form of Bernoulli's equation: P + (1/2)\u03c1v\u00b2 + \u03c1gh = constant. Applications include aerodynamics and fluid flow in pipes.",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 23.87,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.293,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "PHY_008",
+      "category": "JEE_Physics",
+      "difficulty": "easy",
+      "question": "What is Coulomb's law?",
+      "ground_truth": "Coulomb's law states that the electrostatic force between two point charges is directly proportional to the product of their charges and inversely proportional to the square of the distance between them. F = k*q1*q2/r^2 where k = 9x10^9 Nm^2/C^2.",
+      "generated_answer": "Coulomb's Law describes the electrostatic force between two point charges, stating that the force is directly proportional to the product of the magnitudes of the charges and inversely proportional to the square of the distance between them. The formula is F = k * |q1 * q2| / r^2, where k is Coulomb's constant.",
+      "verdict": "UNVERIFIED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 38.45,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.34,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "PHY_009",
+      "category": "JEE_Physics",
+      "difficulty": "hard",
+      "question": "Explain the photoelectric effect.",
+      "ground_truth": "The photoelectric effect is the emission of electrons from a metal surface when light of sufficient frequency shines on it. Key observations: emission is instantaneous, depends on frequency not intensity, and each metal has a threshold frequency below which no emission occurs. Explained by Einstein using photon theory: E = hf.",
+      "generated_answer": "The photoelectric effect is a phenomenon where electrons are emitted from a material, typically a metal, when it is exposed to electromagnetic radiation, such as light. A minimum frequency, known as the threshold frequency, is required for this emission to occur. The energy of the emitted electrons is given by the equation E = hf, where h is Planck's constant and f is the frequency of the incident light. According to Einstein's explanation using photon theory, the kinetic energy of the emitted electrons is equal to hf minus the work function of the metal. Importantly, no emission of electrons occurs below the threshold frequency, regardless of the intensity of the light.",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.85,
+      "from_cache": false,
+      "pipeline_duration_seconds": 23.29,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.668,
+      "sources_agree": true,
+      "error": null
+    },
+    {
+      "id": "PHY_010",
+      "category": "JEE_Physics",
+      "difficulty": "hard",
+      "question": "What is the Heisenberg uncertainty principle?",
+      "ground_truth": "The Heisenberg uncertainty principle states that it is impossible to simultaneously measure both the position and momentum of a particle with perfect accuracy. delta_x * delta_p >= h/4pi, where h is Planck's constant. This is a fundamental property of quantum systems, not a measurement limitation.",
+      "generated_answer": "The Heisenberg Uncertainty Principle states that it is impossible to simultaneously measure the position and momentum of a particle with perfect accuracy. It is mathematically expressed as \u03c3_x \u03c3_p \u2265 \u0127/2, where \u03c3_x is the uncertainty in position, \u03c3_p is the uncertainty in momentum, and \u0127 is the reduced Planck constant. The principle also applies to energy and time, expressed as \u0394E \u0394t \u2265 \u0127/2. This principle is a fundamental property of quantum mechanics, not a measurement error.",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 23.25,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.469,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "CHE_001",
+      "category": "JEE_Chemistry",
+      "difficulty": "easy",
+      "question": "What is Avogadro's number and what does it represent?",
+      "ground_truth": "Avogadro's number is 6.022 x 10^23 and represents the number of particles (atoms, molecules, or ions) in one mole of a substance. It is the bridge between atomic scale and macroscopic scale measurements in chemistry.",
+      "generated_answer": "Avogadro's number, also known as Avogadro's constant, is defined as 6.022 \u00d7 10^23 particles per mole. It represents the quantity of elementary entities (such as atoms, molecules, or ions) in one mole of a substance. This number is fundamental in chemistry as it connects the atomic scale to the macroscopic scale, facilitating stoichiometric calculations and relating the mass of a substance to the number of particles it contains.",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.9,
+      "from_cache": false,
+      "pipeline_duration_seconds": 18.55,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.399,
+      "sources_agree": true,
+      "error": null
+    },
+    {
+      "id": "CHE_002",
+      "category": "JEE_Chemistry",
+      "difficulty": "medium",
+      "question": "State Le Chatelier's principle.",
+      "ground_truth": "Le Chatelier's principle states that if a system at equilibrium is subjected to a change in concentration, temperature, or pressure, the system will shift its equilibrium position to counteract the change and establish a new equilibrium.",
+      "generated_answer": "Le Chatelier's principle states that if a dynamic equilibrium is disturbed by changing the conditions, the position of equilibrium shifts to counteract the change and restore a new equilibrium. This applies to changes in concentration, temperature, and pressure in a chemical reaction at equilibrium.",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.8,
+      "from_cache": false,
+      "pipeline_duration_seconds": 11.73,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.451,
+      "sources_agree": true,
+      "error": null
+    },
+    {
+      "id": "CHE_003",
+      "category": "JEE_Chemistry",
+      "difficulty": "easy",
+      "question": "What is the difference between ionic and covalent bonds?",
+      "ground_truth": "Ionic bonds form by complete transfer of electrons between metals and non-metals, creating oppositely charged ions. Covalent bonds form by sharing of electrons between non-metals. Ionic compounds have high melting points and conduct electricity when dissolved. Covalent compounds generally have lower melting points.",
+      "generated_answer": "Ionic bonds are formed through the transfer of electrons from one atom to another, typically between metals and non-metals, resulting in charged ions (cations and anions). They are generally stronger, solid at room temperature, and form crystalline structures, with sodium chloride (NaCl) as a classic example. Covalent bonds involve the sharing of electrons between non-metals, resulting in neutral molecules. They are generally weaker, can exist in various states at room temperature, and do not form crystalline structures, with methane (CH\u2084) as an example.",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.8,
+      "from_cache": false,
+      "pipeline_duration_seconds": 24.1,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.571,
+      "sources_agree": true,
+      "error": null
+    },
+    {
+      "id": "CHE_004",
+      "category": "JEE_Chemistry",
+      "difficulty": "medium",
+      "question": "What is the first law of thermodynamics?",
+      "ground_truth": "The first law of thermodynamics states that energy cannot be created or destroyed. For a thermodynamic system: delta U = Q - W, where delta U is change in internal energy, Q is heat added to the system, and W is work done by the system.",
+      "generated_answer": "The first law of thermodynamics, also known as the law of conservation of energy, states that the total energy of an isolated system remains constant. It can be expressed mathematically as \u0394U = Q - W, where \u0394U is the change in internal energy of the system, Q is the heat added to the system, and W is the work done by the system. This law implies that energy can neither be created nor destroyed; it can only be transformed from one form to another.",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.8,
+      "from_cache": false,
+      "pipeline_duration_seconds": 13.34,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.402,
+      "sources_agree": true,
+      "error": null
+    },
+    {
+      "id": "CHE_005",
+      "category": "JEE_Chemistry",
+      "difficulty": "medium",
+      "question": "Explain Hund's rule of maximum multiplicity.",
+      "ground_truth": "Hund's rule states that when filling orbitals of equal energy, electrons occupy each orbital singly before any orbital gets a second electron, and all singly occupied orbitals have electrons with the same spin. This minimizes electron-electron repulsion and gives the most stable configuration.",
+      "generated_answer": "Hund's rule of maximum multiplicity states that for a given electron configuration, the arrangement of electrons in orbitals will be such that the total spin multiplicity is maximized. This means that electrons will occupy degenerate orbitals singly before pairing up, minimizing repulsion and leading to a more stable configuration. The spin multiplicity is given by the formula \\(2S + 1\\), where \\(S\\) is the total spin quantum number. An example is the nitrogen atom, where the three electrons in the \\(2p\\) subshell occupy separate orbitals before pairing.",
+      "verdict": "UNVERIFIED",
+      "confidence_score": 0.4,
+      "from_cache": false,
+      "pipeline_duration_seconds": 80.61,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.22,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "CHE_006",
+      "category": "JEE_Chemistry",
+      "difficulty": "medium",
+      "question": "What is hybridization? Explain sp3 hybridization with example.",
+      "ground_truth": "Hybridization is the mixing of atomic orbitals to form new hybrid orbitals of equal energy. sp3 hybridization involves mixing one s and three p orbitals to form four equivalent sp3 orbitals arranged tetrahedrally at 109.5 degrees. Example: methane (CH4) where carbon is sp3 hybridized.",
+      "generated_answer": "Hybridization is a concept in chemistry that describes the mixing of atomic orbitals to form new hybrid orbitals. sp\u00b3 hybridization occurs when one s orbital and three p orbitals from the same atom mix to form four equivalent hybrid orbitals. This type of hybridization is commonly seen in carbon atoms, particularly in methane (CH\u2084), which has a tetrahedral geometry with bond angles of approximately 109.5\u00b0.",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.8,
+      "from_cache": false,
+      "pipeline_duration_seconds": 15.51,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.445,
+      "sources_agree": true,
+      "error": null
+    },
+    {
+      "id": "CHE_007",
+      "category": "JEE_Chemistry",
+      "difficulty": "hard",
+      "question": "What is the difference between SN1 and SN2 reactions?",
+      "ground_truth": "SN1 is a two-step substitution where the leaving group departs first forming a carbocation, then the nucleophile attacks. Favored by tertiary substrates and polar protic solvents. SN2 is one-step where nucleophile attacks simultaneously as leaving group departs. Favored by primary substrates and polar aprotic solvents. SN2 causes inversion of configuration.",
+      "generated_answer": "SN1 and SN2 reactions are two types of nucleophilic substitution reactions in organic chemistry. SN1 reactions are unimolecular, occurring in two steps with a carbocation intermediate, favoring tertiary substrates and polar protic solvents, leading to racemization. SN2 reactions are bimolecular, occurring in a single concerted step, favoring primary substrates and polar aprotic solvents, resulting in inversion of configuration.",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.8,
+      "from_cache": false,
+      "pipeline_duration_seconds": 20.79,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.476,
+      "sources_agree": true,
+      "error": null
+    },
+    {
+      "id": "CHE_008",
+      "category": "JEE_Chemistry",
+      "difficulty": "medium",
+      "question": "What is Raoult's law?",
+      "ground_truth": "Raoult's law states that the partial vapor pressure of a component in an ideal solution is equal to the vapor pressure of the pure component multiplied by its mole fraction. P_A = P_A(pure) * x_A. The total vapor pressure is the sum of partial pressures of all components.",
+      "generated_answer": "Raoult's Law states that the partial vapor pressure of a component in an ideal solution equals the vapor pressure of the pure component multiplied by its mole fraction. Mathematically, it can be expressed as P_A = P_A(pure) * x_A, where P_A is the partial vapor pressure, P_A(pure) is the vapor pressure of the pure component, and x_A is the mole fraction of the component in the solution. The total pressure of the solution is the sum of the partial pressures of all components.",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 14.38,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.471,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "CHE_009",
+      "category": "JEE_Chemistry",
+      "difficulty": "easy",
+      "question": "Explain the concept of electronegativity and its trend in the periodic table.",
+      "ground_truth": "Electronegativity is the tendency of an atom to attract shared electrons toward itself in a covalent bond. It increases across a period from left to right as nuclear charge increases. It decreases down a group as atomic radius increases. Fluorine has the highest electronegativity of 4.0 on the Pauling scale.",
+      "generated_answer": "Electronegativity is the tendency of an atom in a molecule to attract shared electrons towards itself. It increases across a period from left to right due to increased nuclear charge and decreases down a group due to increased atomic size and electron shielding. Fluorine has the highest electronegativity (4.0), while the lowest is debated between cesium (0.7) and francium.",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 24.15,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.569,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "CHE_010",
+      "category": "JEE_Chemistry",
+      "difficulty": "easy",
+      "question": "What is the aufbau principle?",
+      "ground_truth": "The aufbau principle states that electrons fill atomic orbitals in order of increasing energy. The order is: 1s, 2s, 2p, 3s, 3p, 4s, 3d, 4p, 5s, 4d, 5p, 6s, 4f, 5d, 6p. Each orbital can hold a maximum of two electrons with opposite spins per the Pauli exclusion principle.",
+      "generated_answer": "The Aufbau principle states that electrons fill orbitals in order of increasing energy, starting from the lowest energy subshells. The order of filling is typically 1s, 2s, 2p, 3s, 3p, 4s, 3d, and so on. This principle is essential for determining the electron configuration of atoms.",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 15.22,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.51,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "MAT_001",
+      "category": "JEE_Math",
+      "difficulty": "easy",
+      "question": "What is the quadratic formula and when is it used?",
+      "ground_truth": "The quadratic formula x = (-b \u00b1 sqrt(b^2 - 4ac)) / 2a solves any quadratic equation ax^2 + bx + c = 0. The discriminant b^2 - 4ac determines the nature of roots: positive means two real roots, zero means one repeated root, negative means two complex roots.",
+      "generated_answer": "The quadratic formula is used to find the solutions (or roots) of a quadratic equation of the form \\( ax^2 + bx + c = 0 \\). It is given by: \\( x = \frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} \\). The discriminant \\( D = b^2 - 4ac \\) determines the nature of the roots: if \\( D > 0 \\), there are two distinct real roots; if \\( D = 0 \\), there is one repeated real root; and if \\( D < 0 \\), there are two complex conjugate roots. The quadratic formula is particularly useful when the equation cannot be easily factored, to find complex roots, and in various applications in calculus and physics.",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.8,
+      "from_cache": false,
+      "pipeline_duration_seconds": 19.4,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.422,
+      "sources_agree": true,
+      "error": null
+    },
+    {
+      "id": "MAT_002",
+      "category": "JEE_Math",
+      "difficulty": "hard",
+      "question": "State the fundamental theorem of calculus.",
+      "ground_truth": "The fundamental theorem of calculus has two parts. Part 1: if F is an antiderivative of f, then the definite integral of f from a to b equals F(b) - F(a). Part 2: the derivative of the integral of f from a to x equals f(x). It connects differentiation and integration as inverse operations.",
+      "generated_answer": "The Fundamental Theorem of Calculus consists of two parts: Part 1 states that if F is an antiderivative of f, then the integral from a to b of f(x)dx equals F(b) - F(a). Part 2 states that the derivative of the integral from a to x of f(t)dt is equal to f(x). This theorem connects differentiation and integration as inverse operations.",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 9.86,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.423,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "MAT_003",
+      "category": "JEE_Math",
+      "difficulty": "medium",
+      "question": "What is the binomial theorem?",
+      "ground_truth": "The binomial theorem states that (a+b)^n = sum from k=0 to n of C(n,k) * a^(n-k) * b^k, where C(n,k) = n!/(k!(n-k)!) is the binomial coefficient. The general term is T(r+1) = C(n,r) * a^(n-r) * b^r.",
+      "generated_answer": "The Binomial Theorem states that the expansion of \\((a + b)^n\\) can be expressed as \\((a + b)^n = \\sum_{k=0}^{n} C(n, k) a^{(n-k)} b^k\\), where \\(C(n, k) = \frac{n!}{k!(n-k)!}\\). The theorem provides a way to expand binomial expressions raised to a power, and is widely used in algebra and combinatorics.",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 22.03,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.438,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "MAT_004",
+      "category": "JEE_Math",
+      "difficulty": "medium",
+      "question": "Define a limit and explain continuity of a function.",
+      "ground_truth": "The limit of f(x) as x approaches a is L if f(x) gets arbitrarily close to L as x approaches a. A function is continuous at x=a if: the function is defined at a, the limit exists at a, and the limit equals f(a). If any condition fails, the function is discontinuous at that point.",
+      "generated_answer": "A limit is defined as the value that a function approaches as the input approaches a certain point. Formally, the limit of a function f(x) as x approaches a value c is denoted as lim_{x -> c} f(x) = L, meaning that as x gets arbitrarily close to c, f(x) approaches L. A function is continuous at a point x = a if: 1) f(a) is defined, 2) the limit of f(x) as x approaches a exists, and 3) the limit equals f(a). If any of these conditions fail, the function is discontinuous at that point.",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.8,
+      "from_cache": false,
+      "pipeline_duration_seconds": 29.47,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.258,
+      "sources_agree": true,
+      "error": null
+    },
+    {
+      "id": "MAT_005",
+      "category": "JEE_Math",
+      "difficulty": "medium",
+      "question": "What is the dot product and cross product of vectors?",
+      "ground_truth": "Dot product: A.B = |A||B|cos(theta), gives a scalar. It equals zero for perpendicular vectors. Cross product: AxB = |A||B|sin(theta)*n_hat, gives a vector perpendicular to both A and B. Its magnitude equals the area of the parallelogram formed by the vectors. Cross product is zero for parallel vectors.",
+      "generated_answer": "The dot product of two vectors A and B is given by the formula A \u00b7 B = |A| \u00d7 |B| \u00d7 cos(\u03b8), where \u03b8 is the angle between the two vectors. The result is a scalar. In component form, it can be expressed as A \u00b7 B = Ax Bx + Ay By + Az Bz. The cross product of two vectors A and B is given by the formula A \u00d7 B = |A| \u00d7 |B| \u00d7 sin(\u03b8) \u00d7 n\u0302, where n\u0302 is a unit vector perpendicular to both A and B. The result is a vector, and its magnitude equals the area of the parallelogram formed by the vectors. In component form, it is expressed as A \u00d7 B = (Ay Bz - Az By) i + (Az Bx - Ax Bz) j + (Ax By - Ay Bx) k.",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.8,
+      "from_cache": false,
+      "pipeline_duration_seconds": 24.02,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.569,
+      "sources_agree": true,
+      "error": null
+    },
+    {
+      "id": "POL_001",
+      "category": "UPSC_Polity",
+      "difficulty": "easy",
+      "question": "What are the Fundamental Rights in the Indian Constitution?",
+      "ground_truth": "Fundamental Rights are in Part III (Articles 12-35) of the Indian Constitution. The six rights are: Right to Equality (14-18), Right to Freedom (19-22), Right against Exploitation (23-24), Right to Freedom of Religion (25-28), Cultural and Educational Rights (29-30), and Right to Constitutional Remedies (Article 32). They are justiciable and enforceable by courts.",
+      "generated_answer": "The Fundamental Rights in the Indian Constitution are a set of rights guaranteed to all citizens, ensuring their freedom and equality. They are enshrined in Part III (Articles 12 to 35) of the Constitution and are enforceable by the courts. The six Fundamental Rights are: 1. Right to Equality (Articles 14-18): Includes equality before the law and prohibition of discrimination. 2. Right to Freedom (Articles 19-22): Encompasses freedoms such as speech, assembly, and protection against arbitrary arrest. 3. Right against Exploitation (Articles 23-24): Prohibits human trafficking and forced labor. 4. Right to Freedom of Religion (Articles 25-28): Grants freedom to practice and propagate religion. 5. Cultural and Educational Rights (Articles 29-30): Protects the interests of minorities. 6. Right to Constitutional Remedies (Article 32): Allows individuals to approach the Supreme Court for enforcement of their rights.",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.9,
+      "from_cache": false,
+      "pipeline_duration_seconds": 16.74,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.719,
+      "sources_agree": true,
+      "error": null
+    },
+    {
+      "id": "POL_002",
+      "category": "UPSC_Polity",
+      "difficulty": "easy",
+      "question": "What is the Preamble to the Indian Constitution?",
+      "ground_truth": "The Preamble declares India to be a Sovereign Socialist Secular Democratic Republic. It secures to citizens Justice (social, economic, political), Liberty (of thought, expression, belief, faith, worship), Equality (of status and opportunity), and Fraternity. The word Socialist and Secular were added by the 42nd Amendment in 1976.",
+      "generated_answer": "The Preamble to the Indian Constitution serves as an introductory statement that outlines the guiding principles and philosophy of the Constitution. It reads: 'We, the people of India, having solemnly resolved to constitute India into a Sovereign Socialist Secular Democratic Republic and to secure to all its citizens: Justice, social, economic and political; Liberty of thought, expression, belief, faith and worship; Equality of status and of opportunity; and to promote among them all; Fraternity assuring the dignity of the individual and the unity and integrity of the Nation.' The Preamble emphasizes the core values of the Indian state, including sovereignty, socialism, secularism, democracy, justice, liberty, equality, and fraternity. The terms 'Socialist' and 'Secular' were added by the 42nd Amendment in 1976.",
+      "verdict": "VERIFIED",
+      "confidence_score": 0.8,
+      "from_cache": false,
+      "pipeline_duration_seconds": 27.56,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.665,
+      "sources_agree": true,
+      "error": null
+    },
+    {
+      "id": "POL_003",
+      "category": "UPSC_Polity",
+      "difficulty": "medium",
+      "question": "What are Directive Principles of State Policy?",
+      "ground_truth": "Directive Principles are in Part IV (Articles 36-51) of the Constitution. They are non-justiciable guidelines for state policy to promote social and economic justice. They include provisions for equal pay, free legal aid, living wage, uniform civil code, and protection of environment. Though not enforceable, courts use them to interpret laws.",
+      "generated_answer": "The Directive Principles of State Policy (DPSP) are guidelines enshrined in Part IV of the Indian Constitution, specifically Articles 36 to 51. They aim to promote social and economic justice and are non-justiciable, meaning they cannot be enforced in a court of law. Key articles include provisions for equal pay for equal work, free legal aid, and a living wage. While the web search agent emphasizes the classification of DPSP into socialist, Gandhian, and liberal-intellectual principles, the PDF answer lists specific provisions without classification.",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 20.17,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.546,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "POL_004",
+      "category": "UPSC_Polity",
+      "difficulty": "medium",
+      "question": "Explain the federal structure of India.",
+      "ground_truth": "India has a quasi-federal structure with a strong centre. Powers are divided between Union and States via three lists: Union List (97 subjects, only Parliament legislates), State List (66 subjects, only states legislate), and Concurrent List (47 subjects, both can legislate with Union prevailing on conflict). Governor represents Centre in states.",
+      "generated_answer": "India has a quasi-federal structure characterized by a strong central government, with powers divided between the central and state governments as outlined in the Constitution. The Constitution categorizes powers into three lists: the Union List (97 subjects), the State List (66 subjects), and the Concurrent List (47 subjects), with the Union law prevailing in case of conflict. The Governor represents the Centre in the states, reinforcing central authority. India's federal structure is often described as a 'holding together federation' that accommodates regional autonomy while maintaining national unity.",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 23.47,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.506,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "POL_005",
+      "category": "UPSC_Polity",
+      "difficulty": "hard",
+      "question": "What is judicial review in the Indian Constitution?",
+      "ground_truth": "Judicial review is the power of courts to examine the constitutionality of legislative and executive actions. Under Article 13, laws inconsistent with Fundamental Rights are void. The Supreme Court under Article 32 and High Courts under Article 226 can issue writs to enforce fundamental rights. The basic structure doctrine limits Parliament's amending power.",
+      "generated_answer": "Judicial review in the Indian Constitution refers to the power of the Supreme Court and High Courts to examine the constitutionality of legislative and executive actions. It ensures that laws comply with the Constitution, particularly protecting fundamental rights under Articles 13 and 32. While the web search answer provides a broader overview, including types and limitations of judicial review, the PDF focuses on specific articles related to fundamental rights.",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 20.41,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.575,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "HIS_001",
+      "category": "UPSC_History",
+      "difficulty": "medium",
+      "question": "What were the main causes of the 1857 revolt?",
+      "ground_truth": "The 1857 revolt had political causes (Doctrine of Lapse, annexation of Awadh), economic causes (drain of wealth, destruction of Indian industries, heavy taxation), social causes (interference with customs, introduction of Western education), military causes (racial discrimination, greased cartridges incident with Enfield rifle), and religious causes (fear of forced conversion).",
+      "generated_answer": "The main causes of the 1857 revolt included political grievances such as the Doctrine of Lapse and the annexation of Awadh, economic issues like heavy taxation and exploitation of resources, social and religious concerns regarding cultural insensitivity and fear of conversion, and military discontent due to poor treatment of sepoys and the greased cartridges controversy. The revolt began on May 10, 1857, and was a significant uprising against British rule in India.",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 22.2,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.627,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "HIS_002",
+      "category": "UPSC_History",
+      "difficulty": "medium",
+      "question": "Explain the significance of the Dandi March.",
+      "ground_truth": "The Dandi March of 1930, led by Gandhi, was a 241-mile march from Sabarmati to Dandi to protest the British salt tax. It launched the Civil Disobedience Movement, was the first major nonviolent mass movement of the independence struggle, internationalized the freedom struggle, demonstrated that ordinary people could challenge colonial authority, and led to mass arrests including Gandhi.",
+      "generated_answer": "The Dandi March, also known as the Salt March, was a pivotal event in the Indian independence movement led by Mahatma Gandhi from March 12 to April 6, 1930. It covered a distance of 387 kilometers from Sabarmati Ashram to Dandi in Gujarat. The march was significant for several reasons: it exemplified Gandhi's philosophy of nonviolent resistance, protested against the British salt monopoly, mobilized millions of Indians, attracted international attention, catalyzed the Civil Disobedience Movement, and led to negotiations with the British government. While both sources agree on the importance of the march and its nonviolent nature, they differ in details such as the distance covered and the specific outcomes of the movement.",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 20.76,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.354,
+      "sources_agree": false,
+      "error": null
+    },
+    {
+      "id": "HIS_003",
+      "category": "UPSC_History",
+      "difficulty": "medium",
+      "question": "What was the Rowlatt Act and why was it opposed?",
+      "ground_truth": "The Rowlatt Act of 1919 allowed the British government to imprison any person without trial for up to two years if suspected of revolutionary activities. It was opposed because it suspended civil liberties, allowed detention without trial, provided no right of appeal, and was seen as a direct attack on Indian freedom. It triggered mass protests and the Jallianwala Bagh massacre.",
+      "generated_answer": "The Rowlatt Act, officially known as the Anarchical and Revolutionary Crimes Act of 1919, was a repressive law enacted by the British colonial government in India that allowed for imprisonment without trial for up to two years and suspended civil liberties. It was opposed due to its oppressive nature, seen as a violation of fundamental rights, and triggered mass protests across India, culminating in the Jallianwala Bagh massacre on April 13, 1919.",
+      "verdict": "CONFLICTED",
+      "confidence_score": 0.5,
+      "from_cache": false,
+      "pipeline_duration_seconds": 22.01,
+      "agents_used": [
+        "search",
+        "pdf",
+        "verifier"
+      ],
+      "pdf_similarity": 0.419,
+      "sources_agree": false,
+      "error": null
+    }
+  ]
+}

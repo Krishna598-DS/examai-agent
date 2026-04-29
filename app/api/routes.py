@@ -8,6 +8,7 @@ from app.logger import get_logger
 from app.agents.verifier_agent import verifier_agent
 from app.agents.search_agent import search_agent
 from app.orchestrator.graph import orchestrator
+from app.tools.cache import redis_cache
 
 logger = get_logger(__name__)
 router = APIRouter(prefix="/api/v1", tags=["agents"])
@@ -116,3 +117,15 @@ async def orchestrator_stats():
         "orchestrator": orchestrator.get_stats(),
         "vector_store": vector_store.get_stats(),
     }
+
+@router.delete("/cache")
+async def clear_cache():
+    """Clear all cached answers from Redis."""
+    deleted = await redis_cache.clear_all()
+    return {"deleted": deleted, "message": f"Cleared {deleted} cached answers"}
+
+
+@router.get("/cache/stats")
+async def cache_stats():
+    """Get Redis cache statistics."""
+    return await redis_cache.get_stats()
