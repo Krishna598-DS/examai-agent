@@ -8,6 +8,7 @@ from app.agents.verifier_agent import verifier_agent
 from app.tools.cache import redis_cache
 from app.config import settings
 from app.logger import get_logger
+from app.tools.metrics import record_request, active_requests
 from app.exceptions import AgentError
 
 logger = get_logger(__name__)
@@ -103,6 +104,7 @@ class ExamAIOrchestrator:
         """
         pipeline_start = time.time()
         logger.info("orchestrator_run_started", question=question[:100])
+        active_requests.inc()
 
         # Step 1: Check Redis cache
         cached = await redis_cache.get(question)
@@ -195,6 +197,15 @@ class ExamAIOrchestrator:
         await redis_cache.set(question, final)
         self._store_in_memory(question, final)
 
+        record_request(
+            endpoint="ask",
+            verdict=final.get("verdict", "ERROR"),
+            duration=final.get("pipeline_duration_seconds", 0),
+            confidence=final.get("confidence_score", 0),
+            from_cache=final.get("from_cache", False),
+            cache_backend=final.get("cache_backend")
+        )
+        active_requests.dec()
         logger.info(
             "orchestrator_run_completed",
             verdict=final.get("verdict"),

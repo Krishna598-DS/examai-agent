@@ -9,6 +9,9 @@ from app.agents.verifier_agent import verifier_agent
 from app.agents.search_agent import search_agent
 from app.orchestrator.graph import orchestrator
 from app.tools.cache import redis_cache
+from fastapi.responses import Response
+from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
+from app.tools.metrics import update_gauges
 
 logger = get_logger(__name__)
 router = APIRouter(prefix="/api/v1", tags=["agents"])
@@ -129,3 +132,18 @@ async def clear_cache():
 async def cache_stats():
     """Get Redis cache statistics."""
     return await redis_cache.get_stats()
+
+
+@router.get("/metrics")
+async def metrics_endpoint():
+    """Prometheus metrics endpoint."""
+    orchestrator_stats = orchestrator.get_stats()
+    vs_stats = vector_store.get_stats()
+    update_gauges(
+        cache_size_val=orchestrator_stats.get("memory_cache_size", 0),
+        chunks_val=vs_stats.get("total_chunks", 0)
+    )
+    return Response(
+        content=generate_latest(),
+        media_type=CONTENT_TYPE_LATEST
+    )

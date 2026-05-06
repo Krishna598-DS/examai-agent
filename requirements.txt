@@ -111,6 +111,7 @@ packaging==25.0
 pandas==3.0.2
 pillow==12.2.0
 pluggy==1.6.0
+prometheus_client==0.25.0
 propcache==0.4.1
 protobuf==6.33.6
 pyarrow==24.0.0

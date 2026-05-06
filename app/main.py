@@ -22,6 +22,18 @@ from app.exceptions import (
 setup_logging()
 logger = get_logger(__name__)
 
+# Enable LangSmith tracing if configured
+import os
+if settings.langchain_api_key:
+    os.environ["LANGCHAIN_TRACING_V2"] = "true"
+    os.environ["LANGCHAIN_ENDPOINT"] = settings.langchain_endpoint
+    os.environ["LANGCHAIN_API_KEY"] = settings.langchain_api_key
+    os.environ["LANGCHAIN_PROJECT"] = settings.langchain_project
+    logger.info("langsmith_tracing_enabled",
+               project=settings.langchain_project)
+else:
+    logger.info("langsmith_tracing_disabled",
+               reason="LANGCHAIN_API_KEY not set")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
