@@ -138,6 +138,7 @@ requests-oauthlib==2.0.0
 requests-toolbelt==1.0.0
 rich==14.3.4
 rpds-py==0.30.0
+ruff==0.15.12
 safetensors==0.7.0
 scikit-learn==1.8.0
 scikit-network==0.33.5

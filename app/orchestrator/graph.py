@@ -2,14 +2,15 @@
 import asyncio
 import time
 from typing import Optional
-from app.agents.search_agent import search_agent
+
 from app.agents.pdf_agent import pdf_agent
+from app.agents.search_agent import search_agent
 from app.agents.verifier_agent import verifier_agent
-from app.tools.cache import redis_cache
 from app.config import settings
-from app.logger import get_logger
-from app.tools.metrics import record_request, active_requests
 from app.exceptions import AgentError
+from app.logger import get_logger
+from app.tools.cache import redis_cache
+from app.tools.metrics import active_requests, record_request
 
 logger = get_logger(__name__)
 
@@ -33,6 +34,7 @@ class ExamAIOrchestrator:
     def _get_from_memory(self, question: str) -> Optional[dict]:
         """Check in-memory fallback cache."""
         import hashlib
+
         key = hashlib.md5(question.lower().strip().encode()).hexdigest()
 
         if key not in self._memory_cache:
@@ -49,6 +51,7 @@ class ExamAIOrchestrator:
     def _store_in_memory(self, question: str, result: dict):
         """Store in in-memory fallback cache."""
         import hashlib
+
         if result.get("confidence_score", 0) < 0.5:
             return
         key = hashlib.md5(question.lower().strip().encode()).hexdigest()
@@ -59,8 +62,7 @@ class ExamAIOrchestrator:
         """Run search agent with error isolation."""
         try:
             result = await search_agent.run(question)
-            logger.info("search_agent_success",
-                       duration=result.get("duration_seconds"))
+            logger.info("search_agent_success", duration=result.get("duration_seconds"))
             return result
         except Exception as e:
             logger.error("search_agent_failed", error=str(e))
@@ -76,9 +78,11 @@ class ExamAIOrchestrator:
         """Run PDF agent with error isolation."""
         try:
             result = await pdf_agent.run(question)
-            logger.info("pdf_agent_success",
-                       chunks=result.get("chunks_retrieved"),
-                       similarity=result.get("top_similarity"))
+            logger.info(
+                "pdf_agent_success",
+                chunks=result.get("chunks_retrieved"),
+                similarity=result.get("top_similarity"),
+            )
             return result
         except Exception as e:
             logger.error("pdf_agent_failed", error=str(e))
@@ -111,9 +115,7 @@ class ExamAIOrchestrator:
         if cached:
             cached["from_cache"] = True
             cached["cache_backend"] = "redis"
-            cached["cache_latency_ms"] = round(
-                (time.time() - pipeline_start) * 1000, 2
-            )
+            cached["cache_latency_ms"] = round((time.time() - pipeline_start) * 1000, 2)
             return cached
 
         # Step 2: Check memory fallback cache
@@ -121,9 +123,7 @@ class ExamAIOrchestrator:
         if cached:
             cached["from_cache"] = True
             cached["cache_backend"] = "memory"
-            cached["cache_latency_ms"] = round(
-                (time.time() - pipeline_start) * 1000, 2
-            )
+            cached["cache_latency_ms"] = round((time.time() - pipeline_start) * 1000, 2)
             return cached
 
         # Step 3: Run agents concurrently
@@ -155,9 +155,7 @@ class ExamAIOrchestrator:
                 "sources_agree": False,
                 "from_cache": False,
                 "agents_used": [],
-                "pipeline_duration_seconds": round(
-                    time.time() - pipeline_start, 2
-                ),
+                "pipeline_duration_seconds": round(time.time() - pipeline_start, 2),
             }
 
         # Step 5: Verify
@@ -183,15 +181,17 @@ class ExamAIOrchestrator:
             agents_used.append("pdf")
         agents_used.append("verifier")
 
-        final.update({
-            "from_cache": False,
-            "cache_backend": None,
-            "agents_used": agents_used,
-            "agent_duration_seconds": agent_duration,
-            "pipeline_duration_seconds": pipeline_duration,
-            "search_failed": search_failed,
-            "pdf_failed": pdf_failed,
-        })
+        final.update(
+            {
+                "from_cache": False,
+                "cache_backend": None,
+                "agents_used": agents_used,
+                "agent_duration_seconds": agent_duration,
+                "pipeline_duration_seconds": pipeline_duration,
+                "search_failed": search_failed,
+                "pdf_failed": pdf_failed,
+            }
+        )
 
         # Step 8: Store in both caches
         await redis_cache.set(question, final)
@@ -203,7 +203,7 @@ class ExamAIOrchestrator:
             duration=final.get("pipeline_duration_seconds", 0),
             confidence=final.get("confidence_score", 0),
             from_cache=final.get("from_cache", False),
-            cache_backend=final.get("cache_backend")
+            cache_backend=final.get("cache_backend"),
         )
         active_requests.dec()
         logger.info(

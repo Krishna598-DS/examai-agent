@@ -1,0 +1,22 @@
+# ruff.toml
+# Ruff configuration for ExamAI Agent
+
+[lint]
+# Which rules to enable
+# E = pycodestyle errors
+# F = pyflakes (unused imports, undefined names)
+# I = isort (import ordering)
+select = ["E", "F", "I"]
+
+# Rules to ignore
+ignore = [
+    "E501",  # line too long — we allow long lines for readability
+    "E402",  # module level import not at top — needed for path manipulation
+    "F401",  # unused imports — some are re-exported intentionally
+]
+
+[format]
+# Use double quotes for strings
+quote-style = "double"
+# 4 spaces indentation
+indent-style = "space"

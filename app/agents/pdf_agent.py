@@ -3,17 +3,17 @@ import asyncio
 import time
 from pathlib import Path
 from typing import List
-from app.tools.pdf_reader import extract_text_from_pdf, chunk_text
-from app.tools.vector_store import vector_store
+
 from app.config import settings
+from app.exceptions import AgentError, PDFReadError
 from app.logger import get_logger
-from app.exceptions import PDFReadError, AgentError
+from app.tools.pdf_reader import chunk_text, extract_text_from_pdf
+from app.tools.vector_store import vector_store
 
 logger = get_logger(__name__)
 
 
 class PDFAgent:
-
     def __init__(self):
         self.pdf_dir = Path("data/pdfs")
         self.pdf_dir.mkdir(parents=True, exist_ok=True)
@@ -22,26 +22,21 @@ class PDFAgent:
     async def index_pdf(self, pdf_path: str) -> dict:
         try:
             loop = asyncio.get_event_loop()
-            pages = await loop.run_in_executor(
-                None, extract_text_from_pdf, pdf_path
-            )
-            chunks = await loop.run_in_executor(
-                None, chunk_text, pages
-            )
+            pages = await loop.run_in_executor(None, extract_text_from_pdf, pdf_path)
+            chunks = await loop.run_in_executor(None, chunk_text, pages)
             added = vector_store.add_chunks(chunks)
             return {
                 "pdf": Path(pdf_path).name,
                 "pages": len(pages),
                 "chunks_created": len(chunks),
                 "chunks_added": added,
-                "already_indexed": added == 0
+                "already_indexed": added == 0,
             }
         except FileNotFoundError as e:
             raise PDFReadError(str(e))
         except Exception as e:
             raise PDFReadError(
-                f"Failed to index PDF: {str(e)}",
-                details={"path": pdf_path}
+                f"Failed to index PDF: {str(e)}", details={"path": pdf_path}
             )
 
     async def index_all_pdfs(self) -> List[dict]:
@@ -56,8 +51,8 @@ class PDFAgent:
         return results
 
     async def run(self, question: str, top_k: int = 5) -> dict:
-        from langchain_openai import ChatOpenAI
         from langchain_core.messages import HumanMessage, SystemMessage
+        from langchain_openai import ChatOpenAI
 
         start = time.time()
         logger.info("pdf_agent_started", question=question[:100])
@@ -88,24 +83,30 @@ class PDFAgent:
         )
 
         messages = [
-            SystemMessage(content="""You are an expert tutor for Indian competitive 
+            SystemMessage(
+                content="""You are an expert tutor for Indian competitive 
 exams (JEE and UPSC). Answer using ONLY the provided context.
-Always cite source and page number. If context is insufficient, say so clearly."""),
-            HumanMessage(content=f"""Context from study materials:
+Always cite source and page number. If context is insufficient, say so clearly."""
+            ),
+            HumanMessage(
+                content=f"""Context from study materials:
 {context}
 
 Question: {question}
 
-Answer based strictly on the above context:""")
+Answer based strictly on the above context:"""
+            ),
         ]
 
         response = await llm.ainvoke(messages)
         sources = list({f"{c['source']} (Page {c['page']})" for c in chunks})
         duration = round(time.time() - start, 2)
 
-        logger.info("pdf_agent_completed",
-                   chunks_retrieved=len(chunks),
-                   duration_seconds=duration)
+        logger.info(
+            "pdf_agent_completed",
+            chunks_retrieved=len(chunks),
+            duration_seconds=duration,
+        )
 
         return {
             "answer": response.content,

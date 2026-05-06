@@ -1,7 +1,8 @@
 # app/tools/cache.py
-import json
 import hashlib
+import json
 from typing import Optional
+
 from app.config import settings
 from app.logger import get_logger
 
@@ -34,6 +35,7 @@ class RedisCache:
         """
         try:
             import redis.asyncio as redis
+
             self._client = redis.from_url(
                 settings.redis_url,
                 encoding="utf-8",
@@ -50,9 +52,7 @@ class RedisCache:
         except Exception as e:
             self._available = False
             logger.warning(
-                "redis_unavailable",
-                error=str(e),
-                fallback="using in-memory cache"
+                "redis_unavailable", error=str(e), fallback="using in-memory cache"
             )
             return False
 
@@ -116,7 +116,7 @@ class RedisCache:
                 "cache_skip",
                 reason="low_confidence_or_error",
                 confidence=confidence,
-                verdict=verdict
+                verdict=verdict,
             )
             return False
 
@@ -131,7 +131,7 @@ class RedisCache:
             logger.info(
                 "cache_set",
                 question=question[:50],
-                ttl_seconds=settings.cache_ttl_seconds
+                ttl_seconds=settings.cache_ttl_seconds,
             )
             return True
 

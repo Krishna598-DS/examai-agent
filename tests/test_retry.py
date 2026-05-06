@@ -1,8 +1,10 @@
 # tests/test_retry.py
-import pytest
 import asyncio
 from unittest.mock import AsyncMock, patch
-from app.tools.retry import with_retry, retryable
+
+import pytest
+
+from app.tools.retry import retryable, with_retry
 
 
 @pytest.mark.asyncio

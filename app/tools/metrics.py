@@ -1,73 +1,66 @@
 # app/tools/metrics.py
 from prometheus_client import (
-    Counter,
-    Histogram,
-    Gauge,
-    generate_latest,
     CONTENT_TYPE_LATEST,
+    Counter,
+    Gauge,
+    Histogram,
+    generate_latest,
 )
 
 requests_total = Counter(
-    "examai_requests_total",
-    "Total number of questions asked",
-    ["endpoint", "verdict"]
+    "examai_requests_total", "Total number of questions asked", ["endpoint", "verdict"]
 )
 
 errors_total = Counter(
-    "examai_errors_total",
-    "Total number of errors",
-    ["endpoint", "error_type"]
+    "examai_errors_total", "Total number of errors", ["endpoint", "error_type"]
 )
 
 cache_hits_total = Counter(
-    "examai_cache_hits_total",
-    "Total number of cache hits",
-    ["backend"]
+    "examai_cache_hits_total", "Total number of cache hits", ["backend"]
 )
 
 cache_misses_total = Counter(
-    "examai_cache_misses_total",
-    "Total number of cache misses"
+    "examai_cache_misses_total", "Total number of cache misses"
 )
 
 pipeline_duration = Histogram(
     "examai_pipeline_duration_seconds",
     "Time taken for full orchestrator pipeline",
-    buckets=[1, 5, 10, 15, 20, 30, 60, 120]
+    buckets=[1, 5, 10, 15, 20, 30, 60, 120],
 )
 
 agent_duration = Histogram(
     "examai_agent_duration_seconds",
     "Time taken for individual agent runs",
     ["agent_name"],
-    buckets=[0.5, 1, 2, 5, 10, 20, 30]
+    buckets=[0.5, 1, 2, 5, 10, 20, 30],
 )
 
 confidence_score = Histogram(
     "examai_confidence_score",
     "Confidence scores of verified answers",
-    buckets=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+    buckets=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
 )
 
-cache_size = Gauge(
-    "examai_cache_size",
-    "Current number of cached answers"
-)
+cache_size = Gauge("examai_cache_size", "Current number of cached answers")
 
 chunks_indexed = Gauge(
-    "examai_chunks_indexed",
-    "Total number of PDF chunks in vector store"
+    "examai_chunks_indexed", "Total number of PDF chunks in vector store"
 )
 
 active_requests = Gauge(
-    "examai_active_requests",
-    "Number of requests currently being processed"
+    "examai_active_requests", "Number of requests currently being processed"
 )
 
 
-def record_request(endpoint: str, verdict: str, duration: float,
-                   confidence: float, from_cache: bool,
-                   cache_backend: str = None):
+def record_request(
+    endpoint: str,
+    verdict: str,
+    duration: float,
+    confidence: float,
+    from_cache: bool,
+    cache_backend: str = None,
+):
     requests_total.labels(endpoint=endpoint, verdict=verdict).inc()
     pipeline_duration.observe(duration)
     confidence_score.observe(confidence)

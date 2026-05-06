@@ -1,0 +1,83 @@
+# .github/workflows/ci.yml
+# This file defines the CI pipeline.
+# GitHub runs this automatically on every push and pull request.
+
+name: CI
+
+# When to run this pipeline
+on:
+  push:
+    branches: [ main ]      # Run on every push to main
+  pull_request:
+    branches: [ main ]      # Run on every PR targeting main
+
+# Jobs are the top-level units of work
+# Multiple jobs run in parallel by default
+jobs:
+
+  test:
+    # The type of machine to run on
+    # ubuntu-latest = Ubuntu 22.04 on GitHub's servers
+    runs-on: ubuntu-latest
+
+    # Steps run sequentially within a job
+    steps:
+      # Step 1: Check out your code
+      # Without this, the runner has no code to work with
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python
+      # actions/setup-python is an official GitHub Action
+      # It installs the specified Python version
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          # Cache pip downloads between runs
+          # This makes subsequent runs much faster
+          cache: "pip"
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Step 4: Lint with ruff
+      # Catches syntax errors, unused imports, style issues
+      - name: Lint with ruff
+        run: |
+          ruff check app/ tests/
+        # continue-on-error: true  # uncomment to make lint non-blocking
+
+      # Step 5: Check formatting with ruff
+      - name: Check formatting
+        run: |
+          ruff format app/ tests/ --check
+
+      # Step 6: Run tests
+      - name: Run tests
+        run: |
+          pytest tests/ -v
+        env:
+          # Tests need these env vars even if empty
+          # Without them, Pydantic Settings raises validation errors
+          OPENAI_API_KEY: "test_key"
+          SERPER_API_KEY: "test_key"
+          ENV: "development"
+          LOG_FORMAT: "console"
+
+  # Second job: check that Docker build works
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t examai-agent:ci .
+        # This verifies the Dockerfile is valid and all
+        # dependencies install correctly in a clean environment

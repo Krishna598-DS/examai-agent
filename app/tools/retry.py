@@ -1,13 +1,14 @@
 # app/tools/retry.py
 import asyncio
 import random
-from typing import TypeVar, Callable, Any
 from functools import wraps
+from typing import Any, Callable, TypeVar
+
 from app.logger import get_logger
 
 logger = get_logger(__name__)
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 async def with_retry(
@@ -17,7 +18,7 @@ async def with_retry(
     base_delay: float = 1.0,
     max_delay: float = 30.0,
     retryable_exceptions: tuple = (Exception,),
-    **kwargs
+    **kwargs,
 ) -> Any:
     """
     Execute an async function with exponential backoff retry logic.
@@ -44,7 +45,7 @@ async def with_retry(
             if attempt > 0:
                 # Calculate exponential backoff
                 # 2^attempt gives: 2, 4, 8, 16...
-                delay = min(base_delay * (2 ** attempt), max_delay)
+                delay = min(base_delay * (2**attempt), max_delay)
 
                 # Add jitter: random value between 0 and 30% of delay
                 # This spreads retries from multiple clients
@@ -56,7 +57,7 @@ async def with_retry(
                     attempt=attempt,
                     max_retries=max_retries,
                     delay_seconds=round(total_delay, 2),
-                    error=str(last_exception)
+                    error=str(last_exception),
                 )
 
                 await asyncio.sleep(total_delay)
@@ -69,9 +70,7 @@ async def with_retry(
             # Don't retry on the last attempt
             if attempt == max_retries:
                 logger.error(
-                    "retry_exhausted",
-                    attempts=max_retries + 1,
-                    final_error=str(e)
+                    "retry_exhausted", attempts=max_retries + 1, final_error=str(e)
                 )
                 raise
 
@@ -82,7 +81,7 @@ def retryable(
     max_retries: int = 3,
     base_delay: float = 1.0,
     max_delay: float = 30.0,
-    retryable_exceptions: tuple = (Exception,)
+    retryable_exceptions: tuple = (Exception,),
 ):
     """
     Decorator version of with_retry.
@@ -93,6 +92,7 @@ def retryable(
         async def my_api_call():
             ...
     """
+
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         async def wrapper(*args, **kwargs):
@@ -103,7 +103,9 @@ def retryable(
                 base_delay=base_delay,
                 max_delay=max_delay,
                 retryable_exceptions=retryable_exceptions,
-                **kwargs
+                **kwargs,
             )
+
         return wrapper
+
     return decorator

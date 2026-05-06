@@ -1,13 +1,15 @@
 # app/agents/verifier_agent.py
+import re
 import time
 from typing import Optional
-from pydantic import BaseModel, Field
-from langchain_openai import ChatOpenAI
+
 from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_openai import ChatOpenAI
+from pydantic import BaseModel, Field
+
 from app.config import settings
-from app.logger import get_logger
 from app.exceptions import VerificationError
-import re
+from app.logger import get_logger
 
 logger = get_logger(__name__)
 
@@ -20,22 +22,13 @@ class VerificationResult(BaseModel):
         description="One of: VERIFIED, CONFLICTED, UNVERIFIED, LOW_CONFIDENCE"
     )
     confidence_score: float = Field(
-        description="Confidence from 0.0 to 1.0",
-        ge=0.0,
-        le=1.0
+        description="Confidence from 0.0 to 1.0", ge=0.0, le=1.0
     )
-    final_answer: str = Field(
-        description="The best answer based on all sources"
-    )
-    reasoning: str = Field(
-        description="Why this verdict was reached"
-    )
-    sources_agree: bool = Field(
-        description="Whether the sources agree with each other"
-    )
+    final_answer: str = Field(description="The best answer based on all sources")
+    reasoning: str = Field(description="Why this verdict was reached")
+    sources_agree: bool = Field(description="Whether the sources agree with each other")
     conflict_explanation: Optional[str] = Field(
-        default=None,
-        description="If sources conflict, explain the difference"
+        default=None, description="If sources conflict, explain the difference"
     )
 
 
@@ -82,6 +75,7 @@ Respond ONLY with a valid JSON object:
   "conflict_explanation": "only if genuinely CONFLICTED, else null"
 }"""
 
+
 class VerifierAgent:
     """
     Cross-verification agent that compares answers from multiple sources
@@ -121,6 +115,7 @@ class VerifierAgent:
             Verified result with confidence score and verdict
         """
         import json
+
         start = time.time()
 
         logger.info("verification_started", question=question[:100])
@@ -144,7 +139,7 @@ class VerifierAgent:
 
 PDF Retrieval Confidence: {pdf_similarity:.2f} (0=no match, 1=perfect match)
 PDF Chunks Found: {pdf_chunks}
-PDF Sources: {', '.join(pdf_sources) if pdf_sources else 'None'}
+PDF Sources: {", ".join(pdf_sources) if pdf_sources else "None"}
 
 Note: If PDF similarity < 0.4, the textbook agent may be guessing.
 If PDF answer says 'no relevant content found', treat PDF as unavailable.
@@ -153,7 +148,7 @@ Verify these answers and respond with the JSON schema specified."""
 
         messages = [
             SystemMessage(content=VERIFIER_SYSTEM_PROMPT),
-            HumanMessage(content=verification_prompt)
+            HumanMessage(content=verification_prompt),
         ]
 
         try:
@@ -166,11 +161,7 @@ Verify these answers and respond with the JSON schema specified."""
                 lines = raw_content.split("\n")
                 # Remove first line (```json) and last line (```)
                 raw_content = "\n".join(lines[1:-1])
-            raw_content = re.sub(
-                r'\\(?!["\\/ bfnrtu])',
-                r'\\\\',
-                raw_content
-            )
+            raw_content = re.sub(r'\\(?!["\\/ bfnrtu])', r"\\\\", raw_content)
 
             # Parse the JSON response
             result_data = json.loads(raw_content)
@@ -185,7 +176,7 @@ Verify these answers and respond with the JSON schema specified."""
                 verdict=verification.verdict,
                 confidence=verification.confidence_score,
                 sources_agree=verification.sources_agree,
-                duration_seconds=duration
+                duration_seconds=duration,
             )
 
             return {
@@ -210,15 +201,16 @@ Verify these answers and respond with the JSON schema specified."""
             # Graceful degradation — if JSON parsing fails,
             # return the search answer with low confidence
             return self._fallback_result(
-                question, search_answer, pdf_answer,
-                reason=f"JSON parse failed: {str(e)}"
+                question,
+                search_answer,
+                pdf_answer,
+                reason=f"JSON parse failed: {str(e)}",
             )
 
         except Exception as e:
             logger.error("verification_failed", error=str(e))
             raise VerificationError(
-                f"Verification failed: {str(e)}",
-                details={"question": question}
+                f"Verification failed: {str(e)}", details={"question": question}
             )
 
     async def self_correct(
@@ -247,14 +239,16 @@ Verify these answers and respond with the JSON schema specified."""
         MAX_CORRECTION_ATTEMPTS = 2
 
         if initial_result["confidence_score"] >= CONFIDENCE_THRESHOLD:
-            logger.info("self_correction_not_needed",
-                       confidence=initial_result["confidence_score"])
+            logger.info(
+                "self_correction_not_needed",
+                confidence=initial_result["confidence_score"],
+            )
             return initial_result
 
         logger.info(
             "self_correction_triggered",
             confidence=initial_result["confidence_score"],
-            verdict=initial_result["verdict"]
+            verdict=initial_result["verdict"],
         )
 
         best_result = initial_result
@@ -268,7 +262,7 @@ Verify these answers and respond with the JSON schema specified."""
             logger.info(
                 "self_correction_attempt",
                 attempt=attempt,
-                reformulated_query=reformulated
+                reformulated_query=reformulated,
             )
 
             # Run new search with reformulated query
@@ -278,17 +272,19 @@ Verify these answers and respond with the JSON schema specified."""
             new_verification = await self.verify(
                 question=question,
                 search_result=new_search_result,
-                pdf_result={"answer": initial_result["source_answers"]["pdf"],
-                           "top_similarity": initial_result["pdf_similarity"],
-                           "chunks_retrieved": 0,
-                           "sources": []}
+                pdf_result={
+                    "answer": initial_result["source_answers"]["pdf"],
+                    "top_similarity": initial_result["pdf_similarity"],
+                    "chunks_retrieved": 0,
+                    "sources": [],
+                },
             )
 
             logger.info(
                 "self_correction_result",
                 attempt=attempt,
                 old_confidence=best_result["confidence_score"],
-                new_confidence=new_verification["confidence_score"]
+                new_confidence=new_verification["confidence_score"],
             )
 
             # Keep the better result
@@ -304,10 +300,7 @@ Verify these answers and respond with the JSON schema specified."""
         return best_result
 
     async def _reformulate_query(
-        self,
-        original_question: str,
-        failure_reason: str,
-        attempt: int
+        self, original_question: str, failure_reason: str, attempt: int
     ) -> str:
         """
         Ask the LLM to reformulate a query that got low confidence results.
@@ -320,28 +313,28 @@ Verify these answers and respond with the JSON schema specified."""
         strategy = strategies[min(attempt - 1, len(strategies) - 1)]
 
         messages = [
-            SystemMessage(content=(
-                "You are a search query optimizer for Indian competitive exam research. "
-                "Reformulate queries to get better search results."
-            )),
-            HumanMessage(content=f"""Original question: {original_question}
+            SystemMessage(
+                content=(
+                    "You are a search query optimizer for Indian competitive exam research. "
+                    "Reformulate queries to get better search results."
+                )
+            ),
+            HumanMessage(
+                content=f"""Original question: {original_question}
 
 Why previous search failed: {failure_reason}
 
 Strategy: {strategy}
 
-Write ONLY the reformulated search query, nothing else.""")
+Write ONLY the reformulated search query, nothing else."""
+            ),
         ]
 
         response = await self.llm.ainvoke(messages)
         return response.content.strip()
 
     def _fallback_result(
-        self,
-        question: str,
-        search_answer: str,
-        pdf_answer: str,
-        reason: str
+        self, question: str, search_answer: str, pdf_answer: str, reason: str
     ) -> dict:
         """Return a safe fallback when verification itself fails."""
         return {

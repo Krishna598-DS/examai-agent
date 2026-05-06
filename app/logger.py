@@ -1,7 +1,9 @@
 # app/logger.py
 import logging
 import sys
+
 import structlog
+
 from app.config import settings
 
 
@@ -21,10 +23,8 @@ def setup_logging() -> None:
     shared_processors = [
         # Adds the log level (INFO, ERROR, etc.) to every event
         structlog.stdlib.add_log_level,
-
         # Adds a timestamp in ISO format to every event
         structlog.processors.TimeStamper(fmt="iso"),
-
         # If you log an exception, this adds the full traceback
         structlog.processors.StackInfoRenderer(),
     ]
@@ -34,14 +34,12 @@ def setup_logging() -> None:
         # Each log line is a valid JSON object — easy to parse programmatically
         processors = shared_processors + [
             structlog.processors.dict_tracebacks,
-            structlog.processors.JSONRenderer()
+            structlog.processors.JSONRenderer(),
         ]
     else:
         # Development: output colored, human-readable logs
         # ConsoleRenderer adds colors and aligns fields nicely
-        processors = shared_processors + [
-            structlog.dev.ConsoleRenderer(colors=True)
-        ]
+        processors = shared_processors + [structlog.dev.ConsoleRenderer(colors=True)]
 
     structlog.configure(
         processors=processors,

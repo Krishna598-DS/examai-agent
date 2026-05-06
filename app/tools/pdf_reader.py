@@ -1,9 +1,11 @@
 # app/tools/pdf_reader.py
-import fitz
 import re
+from dataclasses import dataclass
 from pathlib import Path
 from typing import List
-from dataclasses import dataclass
+
+import fitz
+
 from app.logger import get_logger
 
 logger = get_logger(__name__)
@@ -32,30 +34,24 @@ def extract_text_from_pdf(pdf_path: str) -> List[dict]:
             text = page.get_text("text")
             text = clean_pdf_text(text)
             if text.strip():
-                pages.append({
-                    "page": page_num,
-                    "text": text,
-                    "source": path.name
-                })
+                pages.append({"page": page_num, "text": text, "source": path.name})
 
-    logger.info("pdf_extraction_completed",
-                filename=path.name,
-                pages_extracted=len(pages))
+    logger.info(
+        "pdf_extraction_completed", filename=path.name, pages_extracted=len(pages)
+    )
     return pages
 
 
 def clean_pdf_text(text: str) -> str:
-    text = re.sub(r'(\w+)-\n(\w+)', r'\1\2', text)
-    text = re.sub(r'[ \t]+', ' ', text)
-    text = re.sub(r'^\s*\d+\s*$', '', text, flags=re.MULTILINE)
-    text = re.sub(r'\n{3,}', '\n\n', text)
+    text = re.sub(r"(\w+)-\n(\w+)", r"\1\2", text)
+    text = re.sub(r"[ \t]+", " ", text)
+    text = re.sub(r"^\s*\d+\s*$", "", text, flags=re.MULTILINE)
+    text = re.sub(r"\n{3,}", "\n\n", text)
     return text.strip()
 
 
 def chunk_text(
-    pages: List[dict],
-    chunk_size: int = 800,
-    chunk_overlap: int = 100
+    pages: List[dict], chunk_size: int = 800, chunk_overlap: int = 100
 ) -> List[PDFChunk]:
     chunks = []
     chunk_index = 0
@@ -69,19 +65,21 @@ def chunk_text(
         while start < len(text):
             end = start + chunk_size
             if end < len(text):
-                boundary = text.rfind('.', end - 100, end)
+                boundary = text.rfind(".", end - 100, end)
                 if boundary != -1:
                     end = boundary + 1
 
             chunk_text_content = text[start:end].strip()
             if chunk_text_content:
-                chunks.append(PDFChunk(
-                    text=chunk_text_content,
-                    source=source,
-                    page=page_num,
-                    chunk_index=chunk_index,
-                    total_chunks=0
-                ))
+                chunks.append(
+                    PDFChunk(
+                        text=chunk_text_content,
+                        source=source,
+                        page=page_num,
+                        chunk_index=chunk_index,
+                        total_chunks=0,
+                    )
+                )
                 chunk_index += 1
 
             start = end - chunk_overlap

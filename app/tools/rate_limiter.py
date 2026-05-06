@@ -2,6 +2,7 @@
 import asyncio
 import time
 from collections import deque
+
 from app.logger import get_logger
 
 logger = get_logger(__name__)
@@ -47,8 +48,7 @@ class RateLimiter:
             # monotonic() is better than time() for measuring durations
             # because it never goes backwards (unlike system time which
             # can jump if the clock is adjusted)
-            while self.call_times and \
-                  now - self.call_times[0] >= self.window_seconds:
+            while self.call_times and now - self.call_times[0] >= self.window_seconds:
                 self.call_times.popleft()
 
             if len(self.call_times) >= self.max_calls:
@@ -60,7 +60,7 @@ class RateLimiter:
                     "rate_limit_reached",
                     current_calls=len(self.call_times),
                     max_calls=self.max_calls,
-                    wait_seconds=round(wait_time, 2)
+                    wait_seconds=round(wait_time, 2),
                 )
 
                 # Release lock while waiting so other coroutines can check

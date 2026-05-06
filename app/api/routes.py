@@ -1,17 +1,17 @@
 # app/api/routes.py
 from fastapi import APIRouter
+from fastapi.responses import Response
+from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 from pydantic import BaseModel, Field
-from app.agents.search_agent import search_agent
+
 from app.agents.pdf_agent import pdf_agent
-from app.tools.vector_store import vector_store
-from app.logger import get_logger
-from app.agents.verifier_agent import verifier_agent
 from app.agents.search_agent import search_agent
+from app.agents.verifier_agent import verifier_agent
+from app.logger import get_logger
 from app.orchestrator.graph import orchestrator
 from app.tools.cache import redis_cache
-from fastapi.responses import Response
-from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 from app.tools.metrics import update_gauges
+from app.tools.vector_store import vector_store
 
 logger = get_logger(__name__)
 router = APIRouter(prefix="/api/v1", tags=["agents"])
@@ -21,14 +21,14 @@ class QueryRequest(BaseModel):
     question: str = Field(
         min_length=10,
         max_length=500,
-        examples=["What is Newton's second law of motion?"]
+        examples=["What is Newton's second law of motion?"],
     )
 
 
 class IndexRequest(BaseModel):
     pdf_path: str = Field(
         description="Path to PDF file relative to project root",
-        examples=["data/pdfs/sample_physics.pdf"]
+        examples=["data/pdfs/sample_physics.pdf"],
     )
 
 
@@ -64,6 +64,7 @@ async def pdf_stats():
     """Get vector store statistics."""
     return vector_store.get_stats()
 
+
 @router.post("/verify")
 async def verify_endpoint(request: QueryRequest):
     """
@@ -75,6 +76,7 @@ async def verify_endpoint(request: QueryRequest):
     Returns a confidence-scored, verified answer.
     """
     import asyncio
+
     logger.info("verify_endpoint_called", question=request.question[:100])
 
     # Run search and PDF agents concurrently
@@ -99,6 +101,7 @@ async def verify_endpoint(request: QueryRequest):
 
     return final
 
+
 @router.post("/ask")
 async def ask_endpoint(request: QueryRequest):
     """
@@ -121,6 +124,7 @@ async def orchestrator_stats():
         "vector_store": vector_store.get_stats(),
     }
 
+
 @router.delete("/cache")
 async def clear_cache():
     """Clear all cached answers from Redis."""
@@ -141,9 +145,6 @@ async def metrics_endpoint():
     vs_stats = vector_store.get_stats()
     update_gauges(
         cache_size_val=orchestrator_stats.get("memory_cache_size", 0),
-        chunks_val=vs_stats.get("total_chunks", 0)
+        chunks_val=vs_stats.get("total_chunks", 0),
     )
-    return Response(
-        content=generate_latest(),
-        media_type=CONTENT_TYPE_LATEST
-    )
+    return Response(content=generate_latest(), media_type=CONTENT_TYPE_LATEST)

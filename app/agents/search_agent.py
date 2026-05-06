@@ -1,13 +1,15 @@
 # app/agents/search_agent.py
 import time
-from langchain_core.tools import tool
+
 from langchain_core.messages import SystemMessage
+from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI
 from langgraph.prebuilt import create_react_agent
-from app.tools.web_search import search_and_scrape
+
 from app.config import settings
-from app.logger import get_logger
 from app.exceptions import AgentError, SearchError
+from app.logger import get_logger
+from app.tools.web_search import search_and_scrape
 
 logger = get_logger(__name__)
 
@@ -20,9 +22,7 @@ async def web_search(query: str, num_results: int = 5) -> str:
     Input should be a specific search query including subject context.
     """
     try:
-        return await search_and_scrape(
-            query, num_results=num_results, scrape_top_n=2
-        )
+        return await search_and_scrape(query, num_results=num_results, scrape_top_n=2)
     except SearchError as e:
         return f"Search failed: {e.message}"
 
@@ -88,8 +88,7 @@ class SearchAgent:
         except Exception as e:
             logger.error("search_agent_failed", error=str(e))
             raise AgentError(
-                f"Search agent failed: {str(e)}",
-                details={"question": question}
+                f"Search agent failed: {str(e)}", details={"question": question}
             )
 
 

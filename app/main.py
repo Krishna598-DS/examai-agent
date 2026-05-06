@@ -2,20 +2,22 @@
 import asyncio
 import time
 from contextlib import asynccontextmanager
-from app.tools.cache import redis_cache
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+
 from app.api.routes import router
 from app.config import settings
-from app.logger import setup_logging, get_logger
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
 from app.exceptions import (
     ExamAIException,
     examai_exception_handler,
     http_exception_handler,
     unhandled_exception_handler,
 )
+from app.logger import get_logger, setup_logging
+from app.tools.cache import redis_cache
 
 # Setup logging FIRST before anything else
 # Why first? Any error during startup should also be logged properly
@@ -24,16 +26,16 @@ logger = get_logger(__name__)
 
 # Enable LangSmith tracing if configured
 import os
+
 if settings.langchain_api_key:
     os.environ["LANGCHAIN_TRACING_V2"] = "true"
     os.environ["LANGCHAIN_ENDPOINT"] = settings.langchain_endpoint
     os.environ["LANGCHAIN_API_KEY"] = settings.langchain_api_key
     os.environ["LANGCHAIN_PROJECT"] = settings.langchain_project
-    logger.info("langsmith_tracing_enabled",
-               project=settings.langchain_project)
+    logger.info("langsmith_tracing_enabled", project=settings.langchain_project)
 else:
-    logger.info("langsmith_tracing_disabled",
-               reason="LANGCHAIN_API_KEY not set")
+    logger.info("langsmith_tracing_disabled", reason="LANGCHAIN_API_KEY not set")
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -51,6 +53,7 @@ async def lifespan(app: FastAPI):
     # Shutdown
     await redis_cache.disconnect()
     logger.info("server_stopping", app=settings.app_name)
+
 
 app = FastAPI(
     title=settings.app_name,
@@ -77,6 +80,8 @@ app.add_middleware(
 )
 
 app.include_router(router)
+
+
 @app.get("/")
 async def root():
     logger.info("root_endpoint_called")
@@ -87,11 +92,14 @@ async def root():
         "status": "running",
     }
 
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 @app.get("/ui")
 async def serve_ui():
     return FileResponse("static/index.html")
+
 
 @app.get("/health")
 async def health():
@@ -137,5 +145,5 @@ async def demo_error():
     logger.warning("demo_error_endpoint_called")
     raise ExamAIException(
         message="This is a demo error",
-        details={"hint": "This was intentional", "endpoint": "/demo/error"}
+        details={"hint": "This was intentional", "endpoint": "/demo/error"},
     )
