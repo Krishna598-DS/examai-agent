@@ -29,9 +29,7 @@ async def test_retry_succeeds_after_failure():
     # Patch asyncio.sleep so tests don't actually wait
     with patch("app.tools.retry.asyncio.sleep", new_callable=AsyncMock):
         result = await with_retry(
-            mock_func,
-            max_retries=3,
-            retryable_exceptions=(ValueError,)
+            mock_func, max_retries=3, retryable_exceptions=(ValueError,)
         )
 
     assert result == "success"
@@ -46,9 +44,7 @@ async def test_retry_raises_after_max_retries():
     with patch("app.tools.retry.asyncio.sleep", new_callable=AsyncMock):
         with pytest.raises(ValueError, match="always fails"):
             await with_retry(
-                mock_func,
-                max_retries=2,
-                retryable_exceptions=(ValueError,)
+                mock_func, max_retries=2, retryable_exceptions=(ValueError,)
             )
 
     # Called once initially + 2 retries = 3 total
@@ -64,7 +60,7 @@ async def test_retry_does_not_retry_non_retryable_exception():
         await with_retry(
             mock_func,
             max_retries=3,
-            retryable_exceptions=(ValueError,)  # KeyError not in this list
+            retryable_exceptions=(ValueError,),  # KeyError not in this list
         )
 
     # Should only be called once — no retries
