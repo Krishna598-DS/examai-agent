@@ -1,3 +1,12 @@
+---
+title: ExamAI Agent
+emoji: 🎓
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+---
+
 # ExamAI Agent
 
 A production-grade multi-agent AI system for autonomous research on Indian 
